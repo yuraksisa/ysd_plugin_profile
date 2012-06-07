@@ -1,0 +1,9 @@
+profile_menu:
+  my_account: El meu compte
+  profile: El meu perfil
+  change_password: Canviar clau
+  logout: Desconectar
+profile_admin_menu:
+  profile_menu: Gestió d\'usuaris
+  profile_management: Usuaris
+  usergroup_management: Grups

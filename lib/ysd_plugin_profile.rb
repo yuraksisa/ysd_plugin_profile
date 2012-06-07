@@ -1,0 +1,3 @@
+require 'sinatra/ysd_plugin_profile_middleware'
+require 'ysd_plugin_profile_extension'
+require 'ysd_plugin_profile_init'

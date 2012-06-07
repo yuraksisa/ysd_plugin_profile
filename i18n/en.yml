@@ -1,0 +1,9 @@
+profile_menu:
+  my_account: My account
+  profile: My profile
+  change_password: Change password
+  logout: Logout
+profile_admin_menu:
+  profile_menu: Users management
+  profile_management: Users
+  usergroup_management: Groups
