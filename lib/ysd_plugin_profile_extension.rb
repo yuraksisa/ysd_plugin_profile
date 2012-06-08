@@ -64,13 +64,13 @@ module Huasi
                                                     :menu => menu_account})
           
             menu_item_account_my_profile = Site::MenuItem.new({:title => app.t.profile_menu.profile, 
-                                                             :link_route => "#{app.settings.profile_prefix}", 
+                                                             :link_route => "/profile", 
                                                              :module => :profile, 
                                                              :menu => menu_account,
                                                              :parent => menu_item_account})      
                                                                  
             menu_item_account_configuration = Site::MenuItem.new({:title => app.t.profile_menu.change_password, 
-                                                                :link_route => "#{app.settings.profile_prefix}/change-password", 
+                                                                :link_route => "/profile/change-password", 
                                                                 :module => :profile, 
                                                                 :menu => menu_account,
                                                                 :parent => menu_item_account})
