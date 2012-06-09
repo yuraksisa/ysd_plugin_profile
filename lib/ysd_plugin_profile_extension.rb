@@ -135,6 +135,41 @@ module Huasi
        menu_items
    
     end
+
+    # ========= Page Building ============
+    
+    #
+    # It gets the style sheets defined in the module
+    #
+    # @param [Context]
+    #
+    # @return [Array]
+    #   An array which contains the css resources used by the module
+    #
+    def page_style(context={})
+      ['/profile/css/profile_form.css',
+       '/profile/css/profile.css',
+       '/css/ysd.back.css']
+    end
+
+    #
+    # It gets the scripts used by the module
+    #
+    # @param [Context]
+    #
+    # @return [Array]
+    #   An array which contains the css resources used by the module
+    #
+    def page_script(context={})
+    
+      ['/js/ysd.forms.js',
+       '/js/ysd.back.js',
+       '/js/ysd.date.control.js',
+       '/js/date-es-ES.js',
+       '/photo_gallery/js/ysd-photo-gallery.js']   
+    
+    end  
+
   
     # ========= Routes ===================
     
