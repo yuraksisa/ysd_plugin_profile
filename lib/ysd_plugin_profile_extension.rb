@@ -7,6 +7,31 @@ module Huasi
 
   class ProfileExtension < Plugins::ViewListener
 
+    # ========= Installation =================
+
+    # 
+    # Install the plugin
+    #
+    def install
+    
+        # Create the module's variables
+        
+        SystemConfiguration::Variable.first_or_create({:name => 'profile_album_name'}, 
+                                                      {:value => 'profiles', :description => 'album name', :module => :profile}) 
+                                                      
+        SystemConfiguration::Variable.first_or_create({:name => 'profile_album_photo_width'}, 
+                                                      { :value => '480', :description => 'photo width', :module => :profile})
+                                                      
+        SystemConfiguration::Variable.first_or_create({:name => 'profile_album_photo_height'},
+                                                      { :value => '480', :description => 'photo height', :module => :profile})
+    
+    
+    end
+    
+    def uninstall
+    
+    end
+
     # ========= Blocks =====================
 
     # Retrieve all the blocks defined in this module 
