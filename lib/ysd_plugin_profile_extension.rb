@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'ysd-plugins_viewlistener' unless defined?Plugins::ViewListener
 
 #
@@ -12,10 +13,8 @@ module Huasi
     # 
     # Install the plugin
     #
-    def install
-    
-        # Create the module's variables
-        
+    def install(context={})
+            
         SystemConfiguration::Variable.first_or_create({:name => 'profile_album_name'}, 
                                                       {:value => 'profiles', :description => 'album name', :module => :profile}) 
                                                       
@@ -25,12 +24,14 @@ module Huasi
         SystemConfiguration::Variable.first_or_create({:name => 'profile_album_photo_height'},
                                                       { :value => '480', :description => 'photo height', :module => :profile})
     
-    
+        # Creates the admin profile (default profile to admin the site)
+        
+        unless Users::Profile.get('admin')                
+          Users::Profile.create('admin', {:username => 'admin', :superuser => true, :password => '1234', :full_name => 'Administrator'})                 
+        end
+        
     end
     
-    def uninstall
-    
-    end
 
     # ========= Blocks =====================
 
@@ -54,7 +55,7 @@ module Huasi
     
       [{:name => 'profile_menu',
         :module_name => :profile,
-        :theme => app.settings.theme}]
+        :theme => Themes::ThemeManager.instance.selected_theme.name}]
         
     end
 
