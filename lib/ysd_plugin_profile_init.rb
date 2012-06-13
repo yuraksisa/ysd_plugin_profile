@@ -12,6 +12,9 @@ Plugins::SinatraAppPlugin.register :profile do
    sinatra_extension Sinatra::YSD::Profile
    sinatra_extension Sinatra::YSD::ProfileManagement # Profile Management (Profile)
    sinatra_extension Sinatra::YSD::UserGroupManagement # Profile Management (Profile)
+   sinatra_extension Sinatra::YSD::ProfileRESTApi
+   sinatra_extension Sinatra::YSD::ProfileManagementRESTApi # Profile Management (Profile)
+   sinatra_extension Sinatra::YSD::UserGroupManagementRESTApi # Profile Management (Profile)
    sinatra_helper Sinatra::ProfileHelpers # Profile helpers
    hooker            Huasi::ProfileExtension
   
