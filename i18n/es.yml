@@ -1,3 +1,84 @@
+change_password:
+  title: Cambio de contraseña
+  description: Para cambiar su contraseña, introduzca su contraseña actual.
+  current_password: Contraseña actual
+  password: Contraseña nueva
+  confirm_password: Confirmar contraseña nueva
+  send_button: Enviar
+  error: Se ha producido un error al cambiar la contraseña. Por favor, vuélvalo a intentar
+  validation:
+    current_password_required: La contraseña es obligatoria
+password_forgotten:
+  title: ¿Has olvidado tu contraseña?
+  description: Para restablecer tu contraseña, introduce el nombre de usuario que utilizas para iniciar sesión o la dirección de correo electrónico con la que creaste la cuenta.
+  email: Dirección de correo electrónico
+  send_button: Enviar
+  error: Se ha producido un error al atender su petición. Por favor, vuélvalo a intentar
+available_chars: caracteres disponibles
+profile_form:
+  create_account_title: Crear nueva cuenta
+  update_account_title: Actualizar perfil
+  account_legend: Información de la cuenta
+  email: Correo electrónico
+  username: Nombre usuario
+  password: Contraseña
+  confirm_password: Repetir contraseña
+  personal_information_legend: Información personal
+  full_name: Nombre
+  date_of_birth: Fecha de nacimiento
+  country_of_origin: País de origen
+  sex: Sexo
+  male: Hombre
+  female: Mujer
+  photo_legend: Fotografía
+  change_photo: Cambiar foto
+  about_me: Sobre mi
+  signup_button: Crear cuenta
+  update_button: Actualizar datos
+  sending_request: Enviando petición
+  process_ok_title: Cuenta creada
+  process_ok_description: Se ha creado su cuenta.
+  process_error_title: Error creando su cuenta
+  process_error_description: No se ha podido crear su cuenta. Se ha producido un error en el servidor.
+  process_update_ok_title: Datos actualizados
+  process_update_ok_description: Se ha actualizado la información de su cuenta.
+  process_update_error_title: Error actualizando su cuenta
+  process_update_error_description: No se ha podido actualizar su cuenta. Se ha producido un error en el servidor.
+  username_placeholder: Escriba su nombre de usuario
+  email_placeholder: Escriba su dirección de correo electrónico
+  password_placeholder: Escriba su contraseña
+  confirm_password_placeholder: Confirme su contraseña
+  full_name_placeholder: Escriba su nombre completo (Nombre y apellidos)
+  country_of_origin_placeholder: Escriba su país de origen. (Barcelona, Spain)
+  about_me_placeholder: ¿Qué haces ahora? ¿Tienes alguna cita favorita?
+  validation:
+    mail_required: El correo electrónico es obligatorio
+    mail_valid: Introduzca una dirección de correo electrónica válida, como account@domain.com
+    mail_in_use: La dirección de correo electrónico {0} tiene una cuenta. Ha olvidado su contraseña?
+    mail_not_in_use: La dirección de correo electrónico {0} no está registrada.
+    mail_not_in_use_server: La dirección de correo electrónico %1 no está registrada.
+    username_required: El nombre de usuario es obligatorio
+    username_regexp: El nombre de usuario sólo puede contener letras y números
+    username_in_use: El usuario {0} ya está registrado en el sistema. Por favor utilice un valor diferente.
+    password_required: La contraseña es obligatoria
+    password_minlength: El tamaño mínimo de la contraseña es de 6
+    password_regexp: La contraseña sólo puede contener letras y números
+    password_not_valid: Lo sentimos, esta no es su contraseña
+    confirm_password_equalTo: La confirmación de la contraseña no es igual a la contraseña
+    full_name_required: El nombre es obligatorio
+profile:
+  from: De
+  age: Edad
+  gender: Sexo
+  years: años
+  about_me: Sobre mi
+  edit_profile: Editar perfil
+  member_since: Por aquí desde
+  last_access: Último acceso 
+  about_me: Bio
+  gender: Sexo
+  age: Edad
+photo: Foto
 profile_menu:
   my_account: Mi cuenta
   profile: Mi perfil

@@ -1,0 +1,55 @@
+#profile_form fieldset {
+  border: none;	
+}
+
+#profile_form legend {
+  font-size: larger;
+  color: #333;
+  font-weight: bold;
+}
+
+/** ------- Start photo section --------- **/
+
+#profile_photo_img {
+ display: block;
+ margin: 0 auto;
+ border: 1px solid black;
+}
+
+#change_photo_link {
+ display : inline-block;
+ margin: 0 auto;	
+}
+
+#choose_photo { /* The block used to show the upload form */
+ display: none;
+ width: 600px;
+ border: 1px solid black;
+ background: white;	
+}
+
+/** ------ END photo section ------ **/
+
+#profile_form_buttons {
+ border-top: 1px solid gray;
+ padding-top: 10px;	
+}
+
+#send {
+ margin: 0 auto;
+}	
+
+
+/* -------------- SENDING REQUEST ------------------------- */
+
+#sending-request {
+  display: none;	
+}
+
+#sending-request img {
+  display: block;
+  margin: 0 auto;
+  margin-top:15px;
+}
+
+

@@ -24,12 +24,26 @@ module Huasi
         SystemConfiguration::Variable.first_or_create({:name => 'profile_album_photo_height'},
                                                       { :value => '480', :description => 'photo height', :module => :profile})
     
+        # Create the login menu
+        Site::Menu.first_or_create({:name => 'login'},
+                                   {:title => 'Login', :description => 'Menu de inicio', 
+                                    :menu_items => [Site::MenuItem.new(:title => 'Log in', :link_route => '/login', :description => 'Pagina de login', :weight => 0, :module => :profile)]})
+    
+        # Create the default groups : staff and user
+        
+        Users::UserGroup.first_or_create({:group => 'staff'},
+                                         {:name => 'Staff', :description => 'Web site staff'})
+                                         
+        Users::UserGroup.first_or_create({:group => 'user'},
+                                         {:name => 'User', :description => 'Web site user'})                                 
+
+        
         # Creates the admin profile (default profile to admin the site)
         
         unless Users::Profile.get('admin')                
-          Users::Profile.create('admin', {:username => 'admin', :superuser => true, :password => '1234', :full_name => 'Administrator'})                 
+          Users::Profile.create('admin', {:username => 'admin', :superuser => true, :password => '1234', :full_name => 'Administrator', :usergroups => ['staff'] })                 
         end
-        
+                
     end
     
 

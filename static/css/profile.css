@@ -1,0 +1,57 @@
+#profile {
+ //margin: 5px 15px 5px 15px;	
+}
+
+#profile_summary {
+ float:left;	
+ width: 310px;
+ border-right: 1px solid #DDD;
+ padding-right: 10px;
+ margin-right: 10px;
+}
+
+#profile_detail {
+ //margin-left: 315px;	
+}
+
+#profile_photo {
+  border: 1px solid #DDD;
+  width: 300px;
+  height: 300px;  
+  padding: 5px;
+  margin: 0px 10px 10px 0px;
+}
+
+#profile_photo_img {
+  margin: 0 auto;
+  display: block;
+  padding: 5px;
+}
+
+#profile_basic h2{
+ text-align:left;	
+}
+
+#profile_basic div {
+  padding-bottom: 3px;	
+}
+
+#about_me {
+  margin-top: 10px;	
+}
+
+.profile_literal {
+  color : #615F5F;	
+  display: block;
+}
+
+#profile_actions {
+
+  padding: 10px 5px 10px 0px;
+  
+  -webkit-border-radius: 3px; /* Safari  */ 
+  -moz-border-radius: 3px; /* Firefox */
+  border-radius: 3px; /* iExplorer 9 */	  
+  
+}
+

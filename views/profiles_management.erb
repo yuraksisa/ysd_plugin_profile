@@ -1,0 +1,180 @@
+
+<%= include('entity-management') %>
+
+<!-- Renders the element description -->
+<script type="text/tmpl" id="elements_description">
+
+  <p>Usuarios permite conocer los usuarios que están registrados en el sistema, dar de alta nuevos usuarios y asignar los usuarios a grupos.</p>
+
+</script>
+
+<!-- Renders the elements container -->
+<script type="text/tmpl" id="elements_container_template">
+  <table id="elements_table" class="table">
+     <thead class="table-header">
+       <tr>
+         <th class="table-header-title" scope="col" style="width:15%">User name</th>
+         <th class="table-header-title" scope="col" style="width:20%">Full name</th>
+         <th class="table-header-title" scope="col" style="width:15%">Email</th>
+         <th class="table-header-title" scope="col" style="width:20%">Member since</th>
+         <th class="table-header-title" scope="col" style="width:20%">Last access</th>
+       </tr>
+     </thead>
+     <tbody id="elements_tbody" class="table-tbody">             
+     </tbody>
+  </table>
+
+</script>
+
+<!-- Renders one element in the elements list view -->
+        
+<script type="text/tmpl" id="elements_list_template">
+
+    <tr class="table-row element-navigation-detail" rel="<%%= index %>" id="element_row_<%%=index%>">
+      <td class="table-cell"><%%= entity.username %></td>
+      <td class="table-cell"><%%= entity.full_name %></td>
+      <td class="table-cell"><%%= entity.email %></td>
+      <td class="table-cell"><%%if (!isNaN(new Date(entity.creation_date))) { %> <%%=new Date(entity.creation_date).toString('dd.MM.yyyy HH:mm')%> <%% } %></td>    
+      <td class="table-cell"><%%if (!isNaN(new Date(entity.last_access))) { %> <%%=new Date(entity.last_access).toString('dd.MM.yyyy HH:mm')%> <%% } %></td>  
+    </tr>
+
+</script>
+
+<!-- Renders one element in the element view (full detailed) -->
+
+<script type="text/tmpl" id="element_template">
+
+     <div class="element_template" style="overflow:hidden">
+       <div class="entity-field"><span class="entity-fieldlabel">Username</span> <span class="entity-fieldvalue"><span class="entity-id"><%%= entity.username %></span></span> </div>
+       <div class="entity-field"><span class="entity-fieldlabel">Fullname</span> <span class="entity-fieldvalue"><%%= entity.full_name %></span> </div>
+       <div class="entity-field"><span class="entity-fieldlabel">Email</span> <span class="entity-fieldvalue"><%%= entity.email %></span> </div>
+       <%% if (entity && entity.usergroups) {%>
+       <div class="entity-field"><span class="entity-fieldlabel">Group</span> <span class="entity-fieldvalue"><%%= entity.usergroups %></span> </div>
+       <%% } %>
+       <%% if (entity && entity.superuser) {%>
+       <div class="entity-field"><span class="entity-fieldlabel">Superuser</span> </div>
+       <%% } %>       
+       <div class="entity-field"><span class="entity-fieldlabel">Member since</span> <span class="entity-fieldvalue"><%%if (!isNaN(new Date(entity.creation_date))) { %> <%%=new Date(entity.creation_date).toString('dd.MM.yyyy HH:mm')%> <%% } %></span> </div>
+       <%% if (entity && entity.last_access) {%>
+       <div class="entity-field"><span class="entity-fieldlabel">Last access</span> <span class="entity-fieldvalue"><%%if (!isNaN(new Date(entity.last_access))) { %> <%%=new Date(entity.last_access).toString('dd.MM.yyyy HH:mm')%> <%% } %></span> </div>
+       <%% } %>
+       <%% if (entity.photo && entity.photo.cache && entity.photo.cache.medium) { %>
+       <div class="entity-field"><span class="entity-fieldlabel">Photo</span><span class="entity-fieldvalue"><img src="<%%= entity.photo.cache.medium%>" alt="<%%= entity.username%>" style="float:left; margin-right:10px"/></span></div>
+       <%% } %>
+     </div>
+
+</script>
+
+<!-- Renders the form to edit an element -->
+
+<script type="text/tmpl" id="element_template_form">
+              
+     <form name="element">
+        
+        <div class="top-navigation-bar navigation-bar">
+             <h2 class="form-title">User</h2>
+             <div class="navigation-bar-nav-buttons">
+             </div>
+        </div>        
+
+        <div class="form-fields">
+        
+          <div class="formrow">
+            <label for="username" class="fieldtitle">User name <span class="mandatoryfield">*</span></label>
+            <input type="text" maxlength="20" id="username" name="username" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.username %>" <%% } %> />
+            <div class="fielddescription">The user name. It's used to identify the user.</div>
+          </div>
+        
+          <div class="formrow">
+            <label for="fullname" class="fieldtitle">Full name</label>
+            <input type="text" maxlength="60" id="full_name" name="full_name" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.full_name %>" <%% } %>/>
+            <div class="fielddescription">The user full name : first name + surname.</div>
+          </div>
+        
+          <div class="formrow">
+            <label for="email" class="fieldtitle">Email</label>
+            <input type="text" maxlength="50" id="email" name="email" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.email %>" <%% } %>/>
+            <div class="fielddescription">The user email.</div>
+          </div>
+          
+          <div class="formrow">
+            <label class="fieldtitle">Groups</label>
+            <fieldset class="fieldcontrol">
+              <div id="user_groups">
+              </div>
+            </fieldset>
+            <div class="fielddescription">The groups the user belongs to.</div>
+          </div>
+          
+          <div class="formrow">
+            <div>
+              <input type="checkbox" value="true" name="superuser" <%% if (entity && entity.superuser) { %> checked="true" <%% } %> />
+              <label>Superuser</label>
+              <div class="fielddescription">Check if the user is a superuser.</div>
+            </div>
+          </div>
+        
+        </div>
+        
+        <div class="bottom-navigation-bar navigation-bar">
+             <div class="navigation-bar-nav-buttons">
+                <input type="button" class="cancel-entity-button action-button entity-management-button" value="Cancel"/>
+                <%% if (entity) { %>
+                  <input type="submit" class="update-entity-button action-button entity-management-button" value="Update"/>
+                <%% } 
+                   else { %>
+                  <input type="submit" class="create-entity-button action-button entity-management-button" value="Create"/>
+                <%% } %>
+             </div>
+        </div>
+     
+     </form>
+     
+
+</script>
+
+
+<script type="text/javascript">
+ 
+  function ProfilesHook() {
+ 	   
+    this.entityKey = function(entity) {
+      return entity.username;
+    }
+
+    this.onEdit = function(entity) {
+      $('#username').attr('readonly', true);
+      $('#full_name').focus();  	
+      this.configForm(entity);
+    };
+  
+    this.onNew = function() {
+  	  $('#username').focus();
+  	  this.configForm(null);
+    }
+    
+    this.configForm = function(entity) {
+      
+      var dataSource = new YsdForms.RemoteDataSource('/usergroups',{id:'group', description:'name'});
+      var value = (entity&&entity.usergroups)?entity.usergroups:[]; 
+      var selector = new YsdForms.ListSelector('user_groups', 'usergroups', dataSource, value );
+    	
+    }
+  	
+  };
+  
+  var urls = { 
+  	           query_url  : '/users',
+    	       create_url : '/user',
+  	           update_url : '/user',
+  	           delete_url : '/user',
+  	           get_url    : '/user'
+  	         };
+
+  var profilesHook = new ProfilesHook();
+  var profilesManager = new EntityManagement(urls, 'profile', 12, profilesHook);
+ 
+  $('.entity-title').html('Users');
+  
+  
+</script>

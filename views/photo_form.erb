@@ -1,0 +1,5 @@
+    <input type="hidden" id="photo[path]" name="photo[path]" value="<%= @document['photo']['path'.to_sym] if @document['photo']['path'.to_sym] %>"/>
+    <input type="hidden" id="photo[cache][tiny]" name="photo[cache][tiny]" value="<%= @document['photo']['cache'.to_sym]['tiny'.to_sym] if @document['photo']['cache'.to_sym]['tiny'.to_sym] %>"/>
+    <input type="hidden" id="photo[cache][small]" name="photo[cache][small]" value="<%= @document['photo']['cache'.to_sym]['small'.to_sym] if @document['photo']['cache'.to_sym]['small'.to_sym] %>"/>
+    <input type="hidden" id="photo[cache][medium]" name="photo[cache][medium]" value="<%= @document['photo']['cache'.to_sym]['medium'.to_sym] if @document['photo']['cache'.to_sym]['medium'.to_sym] %>" />
+    <input type="hidden" id="photo[cache][full]" name="photo[cache][full]" value="<%= @document['photo']['cache'.to_sym]['full'.to_sym] if @document['photo']['cache'.to_sym]['full'.to_sym] %>"/>

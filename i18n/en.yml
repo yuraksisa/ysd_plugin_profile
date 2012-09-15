@@ -1,3 +1,84 @@
+change_password:
+  title: Change your password
+  description: To change your password, input your current password.
+  current_password: Current password
+  password: New password
+  confirm_password: Confirm new password
+  send_button: Send
+  error: An error occurred while changing the password. Please try it again
+  validation:
+    current_password_required: The password is required
+password_forgotten:
+  title: Have you forgetten your password?
+  description: To recover your password, input the username you use to start a session or the email which you use to create your account.
+  email: Email address
+  send_button: Send
+  error: An error ocurred while processing your request. Please try it again
+available_chars: available characters
+profile_form:
+  create_account_title: Create a new account
+  update_account_title: Update profile
+  account_legend: Account information
+  email: Email
+  username: User name
+  password: Password
+  confirm_password: Confirm password
+  personal_information_legend: Personal information
+  full_name: Name
+  date_of_birth: Date of birth
+  country_of_origin: Country of origin
+  sex: Sex
+  male: Male
+  female: Female
+  photo_legend: Photo
+  change_photo: Change photo
+  about_me: About me
+  signup_button: Create account
+  update_button: Update account
+  sending_request: Sending request
+  process_ok_title: Profile create successful
+  process_ok_description: Your profile has been created.
+  process_error_title: Error creating profile
+  process_error_description: Your profile has not been created due to an error in the host.
+  process_update_ok_title: Profile updated successful
+  process_update_ok_description: Your profile has been updated.
+  process_update_error_title: Error updating profile
+  process_update_error_description: Your profile has not been updated due to an error in the host.
+  username_placeholder: Input your username
+  email_placeholder: Input your email address
+  password_placeholder: Input your password
+  confirm_password_placeholder: Confirm your password
+  full_name_placeholder: Input your full name (first name and surname)
+  country_of_origin_placeholder: Input your country of origin. -Barcelona, Spain-
+  about_me_placeholder: What are you up to? Do you have any quotes that mean anything to you?    
+  validation:
+    mail_required: The mail is required
+    mail_valid: Please type a valid email address, like account@domain.com
+    mail_in_use: The email adress {0} has an account. Have you forgotten your password?
+    mail_not_in_use: The email adress {0} doesn\'t exist.
+    mail_not_in_use_server : The email adress %1 doesn\'t exist.  
+    username_required: The username is required
+    username_regexp: The username can only contain letters and digits
+    username_in_use: The username {0} is already taken. Please choose another.
+    password_required: The password is required
+    password_minlength: The password min length is 6
+    password_regexp: The password can only contain letters and digits
+    password_not_valid: Sorry, this is not your password
+    confirm_password_equalTo: The confirmed password is not equal to the password
+    full_name_required: The name is required
+profile:
+  from: From 
+  age: Age
+  gender: Sex
+  years: years old
+  about_me: About me
+  edit_profile: Edit profile
+  member_since: Member since
+  last_access: Last access
+  about_me: Bio
+  gender: Sex
+  age: Age  
+photo: Photo
 profile_menu:
   my_account: My account
   profile: My profile

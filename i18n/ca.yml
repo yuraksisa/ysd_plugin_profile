@@ -1,3 +1,84 @@
+change_password:
+  title: Canvi de clau
+  description: Per canviar la teva clau, introdueix la clau actual.
+  current_password: Clau actual
+  password: Nova clau
+  confirm_password: Confirmar nova clau
+  send_button: Enviar
+  error: S\'ha produit un error al canviar la clau. Si us plau, torni-ho a intentar.
+  validation:
+    current_password_required: La clau és obligatòria
+password_forgotten:
+  title: ¿Has oblidat la teva clau?
+  description: Per restablir la teva clau, introdueix el nom d\'usuari que utilitzes per iniciar sesió o l\'adreça de correu electrònic amb la qual vas crear el teu compte.
+  email: Adreça de correu electrònic
+  send_button: Enviar
+  error: S\'ha produit un error al processar la seva petició. Si us plau, torni-ho a intentar. 
+available_chars: caràcters disponibles
+profile_form:
+  create_account_title: Crear un nou compte
+  update_account_title: Actualitzar perfil
+  account_legend: Información de la seva compte
+  email: Correu electrònic
+  username: Nom d'usuari
+  password: Contrasenya
+  confirm_password: Confirmar contrasenya
+  personal_information_legend: Informació personal
+  full_name: Nom complert
+  date_of_birth: Data de naixement
+  country_of_origin: País d\'origen
+  sex: Sexe
+  male: Home
+  female: Dona
+  photo_legend: Fotografia
+  change_photo: Canviar foto
+  about_me: Sobre mi
+  signup_button: Crear compte
+  update_button: Actualitzar dades
+  sending_request: Enviant petició
+  process_ok_title: Compte d\'usuari creada
+  process_ok_description: S\'ha creat el seu compte.
+  process_error_title: Error a la creació del seu compte d\'usuari
+  process_error_description: No s\'ha pogut crear el seu compte d\'usuari 
+  process_update_ok_title: Compte d\'usuari actualitzada
+  process_update_ok_description: S\'ha actualitzat el seu compte.
+  process_update_error_title: Error a l\'actualització del seu compte d\'usuari
+  process_update_error_description: No s\'ha pogut actualitzar el seu compte d\'usuari
+  username_placeholder: Input your username
+  email_placeholder: Input your email address
+  password_placeholder: Input your password
+  confirm_password_placeholder: Confirm your password
+  full_name_placeholder: Input your full name (first name and surname)
+  country_of_origin_placeholder: Input your country of origin. -Barcelona, Spain-
+  about_me_placeholder: What are you up to? Do you have any quotes that mean anything to you?   
+  validation:
+    mail_required: El correu electrònic és obligatori
+    mail_valid: Introdueixi una adreça de correu electrònic vàlida, com per exemple account@domain.com
+    mail_in_use: L\'adreça de correu electrònic {0} té un compte. Ha oblidat la seva clau?
+    mail_not_in_use: L\'adreça de correu electrònic {0} no està registrada.
+    mail_not_in_use_server: L\'adreça de correu electrònic %1 no està registrada.
+    username_required: El nom de l'usuari és obligatori
+    username_regexp: El nom de l'usuari només pot contenir lletres i números
+    username_in_use: L\'usuari {0} ja està registrat. Si us plau, utilitzi un altre nom
+    password_required: La clau és obligatoria
+    password_minlength: El tamany mínim de la clau és 6
+    password_regexp: La clau només pot contenir lletres i números
+    password_not_valid: Ho sentim, aquesta no és la seva clau
+    confirm_password_equalTo: La confirmació de la clau no és igual a la contrasenya
+    full_name_required: El nom és obligatori
+profile:
+  from: De
+  age: Edat
+  gender: Sexe
+  years: anys
+  about_me: Sobre mi
+  edit_profile: Editar perfil
+  member_since: Membre des de 
+  last_access: Últim accés
+  about_me: Bio
+  gender: Sexe
+  age: Edat  
+photo: Foto
 profile_menu:
   my_account: El meu compte
   profile: El meu perfil
