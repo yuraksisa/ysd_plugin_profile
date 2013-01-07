@@ -1,3 +1,23 @@
+#
+# Profile dropdown
+#
+profile_dropdown:
+  register:
+    label: Join
+  login:
+    label: Login
+  password:
+    label: Password
+#
+# Profile management
+#
+profile_management:
+  title: Profile
+  description: >
+               <p>This data is shown on your public profile and searches.</p>
+  tab_personal_information:
+    label: Basic data
+#  
 change_password:
   title: Change your password
   description: To change your password, input your current password.

@@ -1,10 +1,12 @@
 <%= include('entity-management') %>
 
 <!-- Renders the element description -->
+<script type="text/tmpl" id="elements_title">
+    <h2 class="entity-title">User groups</h2>
+</script>
+
 <script type="text/tmpl" id="elements_description">
-
     <p>Los <em>grupos de usuarios</em> le permite organizar los usuarios de su sitio en diferentes categorías, de manera que pueda definir accesos a contenidos o aplicaciones a determinados usuarios, así como conocer qué usuarios pertenecen a un determinado grupo.</p>
-
 </script>
 
 <!-- Renders the elements container -->
@@ -100,6 +102,8 @@
 
 <script type="text/javascript">
  
+require(['YSDEntityManagement', 'YSDForms', 'jquery'], function(EntityManagement, YSDForms, $) {
+
   function UserGroupHook() {
  	   
     this.entityKey = function(entity) {
@@ -119,7 +123,7 @@
     
     this.configForm = function() {
     
-         YsdForms.limit_text_area_content_size(document.getElementById('description'), 256, 
+         YSDForms.limit_text_area_content_size(document.getElementById('description'), 256, 
             function (content_remain) {
               document.getElementById('description_length').innerHTML = '<strong>' + content_remain + '</strong>';
             }
@@ -131,7 +135,7 @@
   
   var urls = { 
   	           query_url  : '/usergroups',
-    	       create_url : '/usergroup',
+    	         create_url : '/usergroup',
   	           update_url : '/usergroup',
   	           delete_url : '/usergroup',
   	           get_url    : '/usergroup'
@@ -140,6 +144,7 @@
   var userGroupHook = new UserGroupHook();
   var userGroupManager = new EntityManagement(urls, 'user group', 12, userGroupHook);
  
-  $('.entity-title').html('User groups');
+
+});
   
 </script>

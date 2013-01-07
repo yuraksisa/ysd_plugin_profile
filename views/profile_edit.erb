@@ -1,0 +1,207 @@
+<%= include('entity-management') %>
+
+<script type="text/tmpl" id="elements_title">
+  <h2 class="entity-title"><%=t.profile_management.title%></h2>
+</script>
+
+<script type="text/tmpl" id="elements_description">
+
+  <%=t.profile_management.description%>
+
+</script>
+
+<!-- Renders the elements container -->
+<script type="text/tmpl" id="elements_container_template">
+
+</script>
+
+<!-- Renders one element in the elements list view -->
+        
+<script type="text/tmpl" id="elements_list_template">
+
+</script>
+
+<!-- Renders one element in the element view (full detailed) -->
+
+<script type="text/tmpl" id="element_template">
+
+</script>
+
+<!-- Renders the form to edit an element -->
+
+<script type="text/tmpl" id="element_template_form">
+              
+     <form name="element">
+   
+        <div class="form-fields">
+          
+          <input type="hidden" name="username" id="username" value="<%%=entity.username%>"/>
+
+          <% if edit_element_form_above.strip.length > 0 %>
+            <div id="form_above">
+               <%= edit_element_form_above %>
+            </div>
+          <% end %>
+
+          <div id="tabs">
+           <ul>
+             <%= render_tab('tab_personal_information', t.profile_management.tab_personal_information.label) %>
+             <% if edit_element_form_above_ingroup_tab.strip.length > 0 %>
+             <%= edit_element_form_above_ingroup_tab %>
+             <% end %>
+           </ul>
+           
+           <div id="tab_personal_information">
+             <div class="formrow">
+               <label for="full_name" class="fieldtitle"><%=t.profile_form.full_name%> *</label>
+               <input type="text" class="fieldcontrol" id="full_name" name="full_name" maxlength="60" value="<%%=entity.full_name%>" class="fieldcontrol" placeholder="<%= t.profile_form.full_name_placeholder%>"/>
+             </div>
+             <div class="formrow">
+                <label for="date_of_birth" class="fieldtitle"><%=t.profile_form.date_of_birth%></label>
+                <select id="date_of_birth_month" name="date_of_birth_month" class="fieldcontrol"></select>
+                <select id="date_of_birth_day" name="date_of_birth_day" class="fieldcontrol-combo"></select>
+                <select id="date_of_birth_year" name="date_of_birth_year" class="fieldcontrol-combo"></select>
+                <input type="hidden" id="date_of_birth" name="date_of_birth"/>
+             </div>
+             <div class="formrow">
+                <label for="country_of_origin" class="fieldtitle"><%=t.profile_form.country_of_origin%></label>
+                <input type="text" class="fieldcontrol" id="country_of_origin" name="country_of_origin" maxlength="40" value="<%%=entity.country_of_origin%>" class="fieldcontrol" placeholder="<%= t.profile_form.country_of_origin_placeholder%>"/>
+             </div>
+             <div class="formrow">
+               <label class="fieldtitle"><%=t.profile_form.sex%> </label>
+               <select id="sex" name="sex" class="fieldcontrol">
+                  <option value="0" <%% if (entity.sex == '0') {%>selected="selected"<%%}%>><%= t.profile_form.male %></option>
+                  <option value="1" <%% if (entity.sex == '1') {%>selected="selected"<%%}%>><%= t.profile_form.female %></option>
+               </select>
+             </div>
+             <div class="formrow">
+               <label for="about_me" class="fieldtitle"><%=t.profile_form.about_me%></label>
+               <textarea id="about_me" class="fieldcontrol" name="about_me" rows="5" placeholder="<%= t.profile_form.about_me_placeholder%>"><%%=entity.about_me%></textarea>
+               <p style="text-align:right"> <span id="about_me_comments_length"></span> <%= t.available_chars %> </p>
+             </div>
+           </div>
+           <% if edit_element_form_above_ingroup.strip.length > 0 %>
+           <%= edit_element_form_above_ingroup %>
+           <% end %>
+        </div>
+        
+        <div class="bottom-navigation-bar navigation-bar">
+             <div class="navigation-bar-nav-buttons">
+                 <input type="submit" class="update-entity-button action-button entity-management-button" value="<%=t.entitymanagement.update%>"/>
+             </div>
+        </div>
+     
+     </form>
+     
+</script>
+
+<%= element_form_extension %>
+<%= element_extension %>
+<%= element_action_extension %>
+
+<script type="text/javascript">
+
+require(['YSDEntityManagement', 'YSDEntityManagementComplementHooks', 'YSDDateControl', 'YSDForms', 'jquery', 'jquery.ui'], function(EntityManagement, EntityManagementComplementHooks, DateControl, YSDForms, $) {
+ 
+  function ProfileHook() {
+ 	   
+    this.entityKey = function(entity) {
+      return entity.username;
+    }
+
+    this.onEdit = function(entity) {
+      this.configForm(entity);
+    }
+
+    this.onNew = function() {
+      this.configForm(null);
+    }
+  	
+    this.adaptFormData = function(data) {
+      
+      delete data.date_of_birth_day;
+      delete data.date_of_birth_month;
+      delete data.date_of_birth_year;      
+
+      return data;
+    }
+
+    this.configForm = function(entity) {
+      
+      $('.top-navigation-bar').hide();
+
+      // Configure tabs
+      $('#tabs').tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+      $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+      
+      // Configure the date of birth  
+      this.date_of_birth = new DateControl(document.getElementById('date_of_birth_day'),
+                                           document.getElementById('date_of_birth_month'),
+                                           document.getElementById('date_of_birth_year'),
+                                           document.getElementById('date_of_birth'),
+                                           '<%= session[:locale]%>');
+      
+      if (entity.date_of_birth) {
+      
+        var date = entity.date_of_birth;
+
+        if (typeof entity.date_of_birth === "string") {
+          date = new Date(date);
+        }
+
+        this.date_of_birth.setDate(date);
+      }
+
+      // Limit the textarea content 
+      YSDForms.limit_text_area_content_size (document.getElementById('about_me'),
+                                             1024,
+                                             function (content_remain) {
+                                              document.getElementById('about_me_comments_length').innerHTML = '<strong>' + content_remain + '</strong>';
+                                             });  
+
+    }
+
+    this.configValidation = function() {
+
+         $('form[name=element]').validate({
+            
+            submitHandler: function(form) 
+            {
+               return false;
+            },
+                               
+            rules : { // rules
+               'full_name' : {
+                 required: true
+               }
+            },
+            
+            messages : { // messages
+               'full_name' : {
+                required: '<%= t.profile_form.validation.full_name_required %>'
+               }
+            }
+            
+          }
+         );
+
+    }    
+
+  };
+  
+  var urls = { 
+  	           get_url    : '/userprofile',
+  	           update_url : '/userprofile'
+  	         };
+
+  var profile_hook = new ProfileHook();
+
+  var hooks = [profile_hook];
+  hooks = hooks.concat(EntityManagementComplementHooks.complements);
+
+  var aspectConfigurationManager = new EntityManagement(urls, 'profile', 1, hooks,
+           {action: 'edit', hold_form_after_action: true}); 
+   
+});
+  
+</script>

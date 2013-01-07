@@ -23,6 +23,9 @@ module Huasi
                                                       
         SystemConfiguration::Variable.first_or_create({:name => 'profile_album_photo_height'},
                                                       { :value => '480', :description => 'photo height', :module => :profile})
+
+        SystemConfiguration::Variable.first_or_create({:name => 'profile.default_group'},
+                                                      {:value => 'user', :description => 'default user group(s)', :module => :profile})
     
         # Create the login menu
         Site::Menu.first_or_create({:name => 'login'},
@@ -37,6 +40,8 @@ module Huasi
         Users::UserGroup.first_or_create({:group => 'user'},
                                          {:name => 'User', :description => 'Web site user'})                                 
 
+        Users::UserGroup.first_or_create({:group => 'anonymous'},
+                                         {:name => 'Anonymous users', :description => 'Anonymous user'})
         
         # Creates the admin profile (default profile to admin the site)
         
@@ -68,6 +73,15 @@ module Huasi
       app = context[:app]
     
       [{:name => 'profile_menu',
+        :module_name => :profile,
+        :theme => Themes::ThemeManager.instance.selected_theme.name},
+       {:name => 'profile_dropdown',
+        :module_name => :profile,
+        :theme => Themes::ThemeManager.instance.selected_theme.name},
+       {:name => 'profile_login_button',
+        :module_name => :profile,
+        :theme => Themes::ThemeManager.instance.selected_theme.name},
+       {:name => 'profile_register_button',
         :module_name => :profile,
         :theme => Themes::ThemeManager.instance.selected_theme.name}]
         
@@ -138,7 +152,29 @@ module Huasi
           
           
           end
-                  
+        
+        when 'profile_dropdown'
+
+           login_locals = {}
+           login_locals.store(:show_create_account, false)
+           login_locals.store(:show_password_forgotten, false)
+           login_form = app.partial(:login, :locals => login_locals)
+
+           locals = {}
+           locals.store(:show_create_account, SystemConfiguration::Variable.get_value('auth.create_account','false').to_bool)
+           locals.store(:show_password_forgotten, SystemConfiguration::Variable.get_value('auth.show_password_forgotten','false').to_bool)
+           locals.store(:login_form, login_form)
+
+           app.partial(:profile_dropdown, :locals => locals) 
+
+        when 'profile_register_button'
+           
+           app.partial(:profile_register_button)
+
+        when 'profile_login_button'
+
+           app.partial(:profile_login_button) 
+
       end
 
     end
@@ -176,6 +212,18 @@ module Huasi
    
     end
 
+    # ========= Resource declaration ============
+    
+    #
+    # It retrieves the images declared in the module
+    #
+    def resource_images(context={})
+      ['/profile/img/man.jpg',
+       '/profile/img/man_small.jpg',
+       '/profile/img/woman.jpg',
+       '/profile/img/woman_small.jpg']
+    end
+
     # ========= Page Building ============
     
     #
@@ -186,31 +234,11 @@ module Huasi
     # @return [Array]
     #   An array which contains the css resources used by the module
     #
-    def page_style(context={})
-      ['/profile/css/profile_form.css',
-       '/profile/css/profile.css',
-       '/css/ysd.back.css']
-    end
-
-    #
-    # It gets the scripts used by the module
-    #
-    # @param [Context]
-    #
-    # @return [Array]
-    #   An array which contains the css resources used by the module
-    #
-    def page_script(context={})
-    
-      ['/js/ysd.forms.js',
-       '/js/ysd.back.js',
-       '/js/ysd.date.control.js',
-       '/js/date-es-ES.js',
-       '/photo_gallery/js/ysd-photo-gallery.js']   
-    
-    end  
-
-  
+    #def page_style(context={})
+    #  ['/profile/css/profile_form.css',
+    #   '/profile/css/profile.css']
+    #end
+ 
     # ========= Routes ===================
     
     # routes

@@ -1,0 +1,104 @@
+<%            
+   age_sex = []
+          
+   case profile.sex
+      when '0' 
+         age_sex << t.profile_form.male 
+      when '1' 
+         age_sex << t.profile_form.female
+      else
+         age_sex << t.profile_form.male 
+   end 
+          
+   if age=profile.age            
+     age_sex << "#{age} #{t.profile.years}"
+   end
+          
+%>
+
+<div id="profile">
+
+  <div id="profile_summary">
+    <div id="profile_photo">
+      <img id="profile_photo_img" src="<%=profile_photo_url(profile)%>"/>  
+    </div>
+    <div id="profile_actions">
+      <!-- EXTRAS : Actions -->
+      <% if user['username'] == profile['username'] %>
+        <%= profile_action %>
+        <div id="edit_profile_button" class="form-button"><a href="/profile/edit"><%=t.profile.edit_profile%></a></div>
+      <% else %>
+        <%= profile_not_owner_action %>
+      <% end %>          
+      <% if defined?element_actions and element_actions.strip.length > 0 %>
+        <%= element_actions %>
+      <% end %>      
+    </div> 
+    <% if profile.about_me and profile.about_me.strip.length > 0 %>
+    <div id="profile_about_me">
+        <h3><%=t.profile.about_me%></h3>
+        <div id="about_me">
+          <%= profile.about_me.gsub(/\n/,'<br/>') %>
+        </div>
+    </div>
+    <% end %>
+    <div style="overflow:hidden">
+      <div style="float:left">
+        <h3><%=t.profile.gender%></h3>
+        <span><%= age_sex[0]%></span>
+      </div>
+      <% if profile.age and profile.age.to_s.strip.length > 0 %>
+      <div style="float:right">
+        <h3><%=t.profile.age%></h3>
+        <span><%= "#{age} #{t.profile.years}" %></span> 
+      </div>
+      <% end %>
+    </div>
+  </div>
+  
+  <div id="profile_detail">
+    <div id="profile_basic">
+      <h2><%=profile['full_name']%></h2>
+      <div id="profile_data">
+        <% if profile['country_of_origin'] and profile['country_of_origin'].strip.length > 0  %>
+          <div><%=profile['country_of_origin']%></div>  
+        <% end %>
+        <% if profile['creation_date'] and profile['creation_date'].is_a?Time %>
+          <div><span class="profile_literal" style="display:inline"><%= t.profile.member_since %></span> <%=profile['creation_date'].strftime("%d.%m.%Y")%></div>
+        <% end %>
+
+        <!-- EXTRAS : Information -->
+
+        <% if defined?element_custom_above and element_custom_above.strip.length > 0%>
+          <div class="entity-custom">
+            <%= element_custom_above %>
+          </div>
+        <% end %>
+        
+        <%= profile_data %>
+
+        <% if defined?element_custom and element_custom.strip.length > 0 %>
+          <div class="entity-custom">
+            <%= element_custom %>
+          </div>
+        <% end %>
+
+      </div>        
+    </div>
+  
+  </div>
+  
+</div>
+
+<!-- Extensions -->
+
+<%= profile_action_extension %>
+<%= profile_not_owner_action_extension %>
+
+<% if defined?element_custom_extensions and element_custom_extensions.strip.length > 0 %>
+<%= element_custom_extensions if defined?element_custom_extensions %>
+<% end %>
+
+<% if defined?element_actions_extensions and element_actions_extensions.strip.length > 0 %>
+<%= element_actions_extensions if defined?element_actions_extensions%>
+<% end %>

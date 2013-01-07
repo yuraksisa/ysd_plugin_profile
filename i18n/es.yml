@@ -1,3 +1,25 @@
+#
+# Profile dropdown
+#
+profile_dropdown:
+  register:
+    label: Registrarse
+  login:
+    label: Conectar
+  password:
+    label: Contraseña
+#
+# Profile management
+#
+profile_management:
+  title: Perfil
+  description: >
+               <p>Esta información aparece en tu perfil público y búsquedas</p>
+  tab_personal_information:
+    label: Datos básicos  
+#
+#
+#
 change_password:
   title: Cambio de contraseña
   description: Para cambiar su contraseña, introduzca su contraseña actual.

@@ -120,17 +120,14 @@ module Sinatra
         app.get "/profile/edit" do
           
           authorized! "/profile"
-      
-          @document = user 
-          @method = "PUT"
-          @action = "/profile"
           
-          load_page(:profile_form, :locals => { :photo_album => SystemConfiguration::Variable.get_value('profile_album_name'), 
-                                                :photo_width => SystemConfiguration::Variable.get_value('profile_album_photo_width'), 
-                                                :photo_height => SystemConfiguration::Variable.get_value('profile_album_photo_height'),
-                                                :photo_accept => SystemConfiguration::Variable.get_value('photo_media_accept'),
-                                                :photo_max_size => SystemConfiguration::Variable.get_value('photo_max_size').to_i})
-      
+          if user
+            locals = {}
+            load_em_page(:profile_edit, :profile, false, :locals => locals)            
+          else
+            status 404
+          end
+                
         end
         
         #
@@ -140,13 +137,11 @@ module Sinatra
     
           authorized! "/profile"
        
-          @document = user
-      
-          if @document.nil?
+          if profile = user
+            page_from_profile(profile)
+          else
             request.logger.error "#{request.path_info} Recurso no encontrado"
             status 404
-          else
-            load_page :profile
           end
       
         end    
@@ -160,13 +155,11 @@ module Sinatra
     
           authorized! "/profile"
        
-          @document = Users::Profile.get(params[:id])
-      
-          if @document.nil?
+          if profile = Users::Profile.get(params[:id])
+             page_from_profile(profile)
+          else
             request.logger.error "#{request.path_info} Recurso no encontrado"
             status 404
-          else
-            load_page :profile
           end
       
         end   

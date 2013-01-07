@@ -1,3 +1,23 @@
+#
+# Profile dropdown
+#
+profile_dropdown:
+  register:
+    label: Enregistrar-se
+  login:
+    label: Conectar
+  password:
+    label: Clau
+#
+# Profile management
+#
+profile_management:
+  title: Perfil
+  description: >
+               <p>Aquesta informació es mostra al teu perfil públic i cerques.</p>
+  tab_personal_information:
+    label: Dades bàsiques
+#
 change_password:
   title: Canvi de clau
   description: Per canviar la teva clau, introdueix la clau actual.

@@ -6,19 +6,15 @@ module Sinatra
     module ProfileManagementRESTApi
    
       def self.registered(app)
-      
-        puts "Registering ProfileManagementRESTApi"
               
-       #
+        #
         # Retrieve users
         #
-        app.get "/users" do
-        
+        app.get "/users" do        
             data=Users::Profile.find_all(false)
-            
+    
             content_type :json
-            data.to_json 
-        
+            data.to_json     
         end
         
         #
@@ -31,7 +27,6 @@ module Sinatra
           
             content_type :json
             {:data => data, :summary => {:total => total}}.to_json
-                  
           end
         end
         
@@ -39,17 +34,12 @@ module Sinatra
         # Creates a user
         #  
         app.post "/user" do
-        
-          puts "Creating content"
           
           request.body.rewind
           profile_request = JSON.parse(URI.unescape(request.body.read))
           
           # Creates the new profile
-          profile = Users::Profile.new(content_request['username'], content_request) 
-          
-          puts "creating profile : #{profile}"
-          
+          profile = Users::Profile.new(content_request['username'], content_request)           
           profile.create
           
           # Return          
@@ -57,15 +47,12 @@ module Sinatra
           content_type :json
           content.to_json          
         
-        
         end
         
         #
         # Updates the user information
         #
         app.put "/user" do
-
-          puts "Updating profile"
         
           request.body.rewind
           profile_request = JSON.parse(URI.unescape(request.body.read))
@@ -73,8 +60,6 @@ module Sinatra
           # Updates an existing content          
           profile = Users::Profile.get(profile_request['username'])
           profile.attributes=(profile_request)
-          
-          puts "updating profile : #{profile}"
           
           profile.update
           

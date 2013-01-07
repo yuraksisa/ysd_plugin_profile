@@ -1,0 +1,292 @@
+    
+    <form name="profile_register_form" id="profile_register_form">
+
+      <div class="formrow">
+        <label for="full_name" class="fieldtitle"><%=t.profile_form.full_name%> *</label>
+        <input type="text" class="fieldcontrol" id="full_name" name="full_name" maxlength="60" class="fieldcontrol" placeholder="<%= t.profile_form.full_name_placeholder%>"/>
+      </div>
+      <div class="formrow">
+        <label for="username" class="fieldtitle"><%=t.profile_form.username%> *</label>
+        <input type="text" class="fieldcontrol" id="username" name="username" maxlength="20" placeholder="<%= t.profile_form.username_placeholder%>"/>
+      </div>    
+      <div class="formrow">
+        <label for="email" class="fieldtitle"><%=t.profile_form.email%> *</label>
+        <input type="text" class="fieldcontrol" id="email" name="email" maxlength="50" placeholder="<%= t.profile_form.email_placeholder%>"/>
+      </div>
+      <div class="formrow">
+        <label for="password" class="fieldtitle"><%=t.profile_form.password%> *</label>
+        <input type="password" class="fieldcontrol" id="password" name="password" maxlength="20" placeholder="<%= t.profile_form.password_placeholder%>"/>
+      </div>
+      <div class="formrow">
+        <label for="confirm_password" class="fieldtitle"><%=t.profile_form.confirm_password%> *</label>
+        <input type="password" class="fieldcontrol" id="confirm_password" name="confirm_password" maxlength="20" placeholder="<%= t.profile_form.confirm_password_placeholder%>"/>
+      </div>
+
+      <div id="profile_form_buttons" class="formrow formrow-botonera">    
+         <input type="submit" id="send" value="<%=t.profile_form.signup_button%>"/>
+      </div>   
+    
+    </form>
+
+    <div id="registering-profile" title="<%= t.profile_form.sending_request %>" style="display:none">
+      <img src="/img/ajax-loader_grande.gif" style="display:block; margin:0 auto"/>
+    </div>  
+
+    <script type="text/javascript">
+
+      require(['jquery','jquery.ui', 'jquery.formparams', 'jquery.validate'], function($) {
+
+        function ProfileRegister() {
+           this.model = new ProfileRegisterModel();
+           this.controller = new ProfileRegisterController(this.model);
+           this.view = new ProfileRegisterView(this.model, this.controller);
+           this.controller.setView(this.view);
+           this.model.setView(this.view);
+
+           this.view.init();
+        }
+
+        function ProfileRegisterModel(){ /* The model */
+
+          this.state = 'starting';
+    
+          this.setView = function(view) {
+            this.view = view;
+          }
+
+          this.change_state = function(action) {
+    
+             switch (action) {        
+               case 'send_request':
+                 this.state = 'sending_request';
+                 break;
+               case 'process_done_ok' :
+                 this.state = 'process_completed';
+                 break;
+               case 'process_done_error' :
+                 this.state = 'process_error';
+                 break;  
+             }
+      
+             this.view.state_changed(this.state);  
+      
+          }
+
+          this.register_profile = function (request) { /* Register the profile */
+          
+            delete request['confirm_password'];
+
+            var json_request = encodeURIComponent(JSON.stringify(request));
+            
+            this.change_state('send_request');
+
+            var self = this;
+
+            $.ajax ({
+               type: 'POST',
+               url: '/profile/signup',
+               data: json_request,
+               data_type: 'html', /* Response expected from the server */
+               content_type: 'application/json; charset=utf-8',
+               success: function(data, textStatus, jqXHR) {
+                 self.change_state('process_done_ok');
+               },
+               error: function(jqXHR, textStatus, errorThrow) {
+                 self.change_state('process_done_error');
+               }   
+             });  
+      
+          }
+
+        }
+
+        function ProfileRegisterController(model) { /* The controller */
+
+          this.model = model;
+
+          this.setView = function(view) {
+            this.view = view;
+          }
+ 
+          this.register_profile = function(data) { /* Register the profile */
+            this.model.register_profile(data);
+          }
+
+          this.on_register_profile = function() { /* On register profile */
+             var currentPage = window.location.href;
+             window.location.href =  currentPage; //'/profile/' + document.getElementById('username').value;
+          }
+
+        }
+
+        function ProfileRegisterView(model, controller) { /* The view */
+
+          this.model = model;
+          this.controller = controller;
+
+          this.init = function() {
+
+            this.configValidation();
+      
+            $('form[name=profile_register_form]').bind('focus', 
+              function(){
+                $('input[name=full_name]').focus();
+              });
+
+            // Configure the dialog
+            $('#registering-profile').dialog({autoOpen: false, height: 160, modal: true,
+              closeOnEscape: false,
+               open: function(event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+               close: function(event, ui) { $(".ui-dialog-titlebar-close").show(); }
+             });
+
+          }
+
+          this.configValidation = function() {
+             
+            var the_controller = this.controller;
+             
+            // Validations
+            // http://www.randallmorey.com/blog/2008/mar/16/extending-jquery-form-validation-plugin/
+            $.validator.addMethod(
+              "regexp",
+              function(value, element, regexp) {
+                var re = new RegExp(regexp);
+                return this.optional(element) || re.test(value);  
+              }, "Please check your input");
+
+            $('#profile_register_form').validate({
+           
+               debug: true,
+           
+               submitHandler: function(form) 
+               {
+                 the_controller.register_profile($(form).formParams(false));
+               },
+              
+               rules : {
+            
+                 'email': {
+                    required : true,
+                    email: true,
+                    remote: {
+                      url: '/profile/check-email-not-exist',
+                      type: 'post',
+                      content_type: 'application/json; charset=utf-8',
+                      data : {
+                        'email' : function() {
+                          return $('form[name=profile_register_form] #email').val(); 
+                        }
+                      }
+                    }  
+                  },
+
+                 'username': {
+                    required: true,  
+                    regexp: '^[\\w|\\d]*$',
+                    remote: {
+                      url: '/profile/check-user-not-exist',
+                      type: 'post',
+                      content_type: 'application/json; charset=utf-8',
+                      data: {
+                        'username': function() {
+                          return $('form[name=profile_register_form] #username').val();
+                        }  
+                      }
+                    }
+                  },
+             
+                  'password': {
+                     required: true,  
+                     minlength : 6,
+                     regexp: '^[\\w|\\d]*$'
+                  },
+             
+                  'confirm_password': {
+                    equalTo: 'form[name=profile_register_form] #password' 
+                  },
+                
+                  'full_name': {
+                    required: true 
+                  }
+            
+                },
+           
+                messages : {
+            
+                  'email' : {
+                     required: "<%= t.profile_form.validation.mail_required %>",
+                     email: "<%= t.profile_form.validation.mail_valid %>",
+                     remote: $.validator.format("<%= t.profile_form.validation.mail_in_use%>")
+                  },
+            
+                 'username': {
+                   required: "<%= t.profile_form.validation.username_required %>",
+                   regexp: "<%= t.profile_form.validation.username_regexp %>",
+                   remote: $.validator.format("<%= t.profile_form.validation.username_in_use%>") 
+                  },
+             
+                 'password': {
+                   required: "<%= t.profile_form.validation.password_required %>",
+                   minlength: "<%= t.profile_form.validation.password_minlength %>",
+                   regexp: "<%= t.profile_form.validation.password_regexp %>" 
+                  },
+             
+                  'confirm_password': {
+                    equalTo: "<%= t.profile_form.validation.confirm_password_equalTo %>"
+                  },
+             
+                  'full_name': {
+                    required: "<%= t.profile_form.validation.full_name_required %>"  
+                  }
+            
+              }
+          
+            });
+
+          }
+
+          this.state_changed = function (new_state) {
+            
+            var the_controller = this.controller;
+
+            switch (new_state) {
+        
+               case 'sending_request':
+                 $('#registering-profile').dialog('open');
+                 break;
+          
+               case 'process_completed':
+                 $('#registering-profile').dialog('close');
+                 $('<div title="<%=t.profile_form.process_ok_title%>"> <%= t.profile_form.process_ok_description %> </div>').dialog( { height: 200, modal: true,       
+                   buttons: {
+                     Ok: function() {
+                       $(this).dialog( "close" );
+                       the_controller.on_register_profile();
+                     }
+                   }
+                  });      
+                 break;
+         
+               case 'process_error':
+                 $('#registering-profile').dialog('close');
+                 $('<div title="<%= t.profile_form.process_error_title%>"> <%= t.profile_form.process_error_description %> </div>').dialog( { height: 200, modal: true,       
+                   buttons: {
+                     Ok: function() {
+                       $(this).dialog( "close" );
+                     }
+                   }
+                 });                                
+                 break;   
+          
+            }
+
+          }
+
+        }
+
+        var profileRegister = new ProfileRegister();
+
+      });
+
+    </script>

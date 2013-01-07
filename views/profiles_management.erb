@@ -1,11 +1,12 @@
 
 <%= include('entity-management') %>
 
-<!-- Renders the element description -->
+<script type="text/tmpl" id="elements_title">
+  <h2 class="entity-title">Users</h2>
+</script>
+
 <script type="text/tmpl" id="elements_description">
-
   <p>Usuarios permite conocer los usuarios que están registrados en el sistema, dar de alta nuevos usuarios y asignar los usuarios a grupos.</p>
-
 </script>
 
 <!-- Renders the elements container -->
@@ -70,19 +71,13 @@
 <script type="text/tmpl" id="element_template_form">
               
      <form name="element">
-        
-        <div class="top-navigation-bar navigation-bar">
-             <h2 class="form-title">User</h2>
-             <div class="navigation-bar-nav-buttons">
-             </div>
-        </div>        
-
+  
         <div class="form-fields">
         
           <div class="formrow">
             <label for="username" class="fieldtitle">User name <span class="mandatoryfield">*</span></label>
             <input type="text" maxlength="20" id="username" name="username" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.username %>" <%% } %> />
-            <div class="fielddescription">The user name. It's used to identify the user.</div>
+            <div class="fielddescription">The user name. Its used to identify the user.</div>
           </div>
         
           <div class="formrow">
@@ -135,6 +130,8 @@
 
 
 <script type="text/javascript">
+
+  require(['YSDEntityManagement', 'YSDRemoteDataSource', 'YSDListSelector','jquery'], function(EntityManagement, RemoteDataSource, ListSelector, $) {
  
   function ProfilesHook() {
  	   
@@ -155,9 +152,9 @@
     
     this.configForm = function(entity) {
       
-      var dataSource = new YsdForms.RemoteDataSource('/usergroups',{id:'group', description:'name'});
+      var dataSource = new RemoteDataSource('/usergroups',{id:'group', description:'name'});
       var value = (entity&&entity.usergroups)?entity.usergroups:[]; 
-      var selector = new YsdForms.ListSelector('user_groups', 'usergroups', dataSource, value );
+      var selector = new ListSelector('user_groups', 'usergroups', dataSource, value );
     	
     }
   	
@@ -165,7 +162,7 @@
   
   var urls = { 
   	           query_url  : '/users',
-    	       create_url : '/user',
+    	         create_url : '/user',
   	           update_url : '/user',
   	           delete_url : '/user',
   	           get_url    : '/user'
@@ -174,7 +171,6 @@
   var profilesHook = new ProfilesHook();
   var profilesManager = new EntityManagement(urls, 'profile', 12, profilesHook);
  
-  $('.entity-title').html('Users');
-  
-  
+});
+
 </script>

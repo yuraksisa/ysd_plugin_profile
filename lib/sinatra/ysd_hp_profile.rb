@@ -1,30 +1,39 @@
+require 'renders/ysd_profile_render'
 module Sinatra
   #
   # Social helpers 
   #
   module ProfileHelpers
    
+    #
+    # Loads the profile page
+    #
+    def page_from_profile(profile, options={})
+
+       profile_page = UI::Page.new(:title => profile.full_name, 
+                                   :content => Renders::ProfileRender.new(profile, self).render(options[:locals]))
+      
+       page(profile_page, options) 
+
+    end
+
+    #
     # Returns the url that shows the profile photo
     #
-    #
     def profile_photo_url(profile)
-            
+        
+        img = options.profile_default_photo
+
         if profile
-          img = 
-            if (profile[:photo])
-              media_url('/photo_gallery', profile[:photo], :medium)
-            end   
-                   
-          unless img 
-            img = (profile[:sex] == '1')?(options.profile_default_women_photo):(options.profile_default_men_photo)
-          end
-          
-          img
-          
-        else
-          options.profile_default_photo
+          img = if (profile.photo_url_medium and profile.photo_url_medium.strip.length > 0)
+                   profile.photo_url_medium
+                else
+                   (profile[:sex] == '1')?(options.profile_default_women_photo):(options.profile_default_men_photo)
+                end          
         end
-    
+
+        return img
+
     end
        
     #

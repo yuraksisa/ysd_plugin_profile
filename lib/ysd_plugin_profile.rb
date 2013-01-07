@@ -1,3 +1,5 @@
+require 'renders/ysd_profile_render'
+
 require 'sinatra/ysd_sinatra_profile'
 require 'sinatra/ysd_sinatra_profile_rest_api'
 
@@ -14,6 +16,7 @@ require 'commands/ysd_profile_password_reset_command'
 require 'commands/ysd_profile_message_received_command'
 
 require 'ysd_plugin_profile_warden'
+require 'ysd_plugin_profile_warden_anonymous'
 
 require 'ysd_plugin_profile_extension'
 require 'ysd_plugin_profile_init'

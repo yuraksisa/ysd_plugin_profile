@@ -1,3 +1,5 @@
+require 'uri'
+
 module Sinatra
   module YSD
     #
@@ -7,13 +9,10 @@ module Sinatra
       
       def self.registered(app)
                       
-        app.enable :logging
-                         
+        app.enable :logging                 
         app.set :profiles_page_size, 12
                          
         # ===================== Public resources ===========================
-        
-        # ---------------- Signup for a new account ------------------------
             
         #
         # Register a new profile (REST API)
@@ -29,11 +28,17 @@ module Sinatra
           
           # Signups the profile     
           the_profile = Users::Profile.signup(profile)
+                
+          # Authenticates the user
+          if authenticated?
+            logout
+          end
       
           # Store the user in the session
-          session.delete(:created_user) if session[:created_user]
+          session.delete(:created_user) if session.has_key?(:created_user)
           session[:created_user] = the_profile
-          authenticate(:profile_strategy) 
+
+          authenticate
       
           status 200
           body "Done"
@@ -75,10 +80,9 @@ module Sinatra
         end
         
         # ===================== Protected resources ==========================
- 
         
-        # ---------------------- Change password -----------------------------
-        
+        #
+        # Change password
         #
         # Check if the connected profile password matches the received
         #
@@ -95,20 +99,34 @@ module Sinatra
           content_type :json  
           result
         
-        end        
- 
- 
-        # ------------------------ Edit profile ------------------------------
+        end         
        
+        #
+        # Get our profile
+        #
+        app.get "/userprofile" do
+
+          authorized! "/profile"
+
+          if user and profile = Users::Profile.get(user.username)
+             status 200
+             content_type :json
+             profile.to_json
+          else
+             status 404
+          end
+
+        end
+
         #
         # Updates our profile (REST API)
         #
-        app.put "/profile" do
+        app.put "/userprofile" do
     
           authorized! "/profile"
       
           request.body.rewind
-          profile = JSON.parse request.body.read
+          profile = JSON.parse(URI.unescape(request.body.read))
       
           # Updates the profile     
           the_profile = Users::Profile.get(profile['username'])
@@ -117,15 +135,13 @@ module Sinatra
       
           # Updates the user in the session
           user.attributes=(profile)  
-            
-          # Show the profile      
-          @document = user
-                              
-          load_page :profile
-    
+
+          status 200
+          content_type :json
+          profile.to_json
+
         end
-              
-        # -------------------- Search profiles -------------------------------
+        
       
         # 
         # Search profile (REST API) 

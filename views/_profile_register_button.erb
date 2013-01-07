@@ -1,0 +1,12 @@
+<div class="form-button profile-register-button">
+  <a name="login"><%=t.profile_dropdown.register.label%></a>
+</div>
+<script type="text/javascript">
+  require(['jquery'], function($) {
+    $('.profile-register-button a').bind('click',
+    	function(){
+    	  $('#profile_dropdown').show();	
+    	  $('.register-button a').trigger('click');
+    	})
+  }); 
+</script>

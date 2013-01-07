@@ -1,0 +1,51 @@
+<div id="profile_dropdown" style="display:none">
+  <div class="profile_dropdown_header">
+  	<div class="close-bar">
+  	  <a><%=t.entitymanagement.close%></a>
+  	</div>
+    <div class="profile-dropdown-button-bar">
+      <div class="form-button login-button profile-block-button"><a href="#profile_login"><%=t.profile_dropdown.login.label%></a></div>
+      <% if show_create_account %>
+      <div class="form-button register-button profile-block-button"><a href="#profile_register"><%=t.profile_dropdown.register.label%></a></div> 
+      <% end %>
+      <% if show_password_forgotten %>    
+      <div class="form-button password-button profile-block-button"><a href="#profile_password_forgotten"><%=t.profile_dropdown.password.label%></a></div>
+      <% end %>
+    </div>
+  </div>
+  <div class="profile_dropdown_body"> 
+    <div id="profile_login" class="profile_block">
+      <%= login_form %>
+    </div>
+    <% if show_create_account %>
+    <div id="profile_register" class="profile_block" style="display:none">
+      <%= partial(:profile_register) %>
+    </div>
+    <% end %>
+    <% if show_password_forgotten %>  
+    <div id="profile_password_forgotten"  class="profile_block" style="display:none">
+      <%= partial(:password_forgotten) %>
+    </div>
+    <% end %>
+  </div>
+</div>
+<script type="text/javascript">
+
+  require(['jquery'], function($) {
+
+     $('.profile-dropdown-button-bar .profile-block-button a').bind('click',
+     	function() {
+           $('.profile_dropdown_body .profile_block').hide();
+           $($(this).attr('href')).show(); 
+           $($(this).attr('href')+' form').focus();
+        }
+      );
+
+     $('.close-bar a').bind('click',
+     	function() {
+          $('#profile_dropdown').hide();
+     	});
+
+  });
+
+</script>
