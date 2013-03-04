@@ -19,15 +19,13 @@ module ProfileWarden
     def authenticate!
                      
       if session[:created_user]          
-        puts "authenticated (exists in session)"
         profile = session.delete(:created_user)
         success!(profile)        
       else                
-        if profile = Users::Profile.login(request.params['username'], request.params['password'])
-          puts "authenticated"
+        if profile = Users::RegisteredProfile.login(request.params['username'], request.params['password'])
+          profile.update_last_access
           success!(profile)
         else
-          puts "not authenticated"
           fail!("User or password is incorrect")
         end
     

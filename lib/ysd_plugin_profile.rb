@@ -1,5 +1,3 @@
-require 'renders/ysd_profile_render'
-
 require 'sinatra/ysd_sinatra_profile'
 require 'sinatra/ysd_sinatra_profile_rest_api'
 

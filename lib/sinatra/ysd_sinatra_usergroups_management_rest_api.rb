@@ -1,3 +1,7 @@
+require 'uri' unless defined?URI
+require 'json' unless defined?JSON
+require 'ysd_md_profile' unless defined?Users::Profile
+
 module Sinatra
   module YSD
     #
@@ -9,7 +13,7 @@ module Sinatra
                     
         app.get "/usergroups" do
             authorized! settings.failure_path
-            data=Users::UserGroup.all
+            data=Users::Group.all
             content_type :json
             data.to_json        
         end
@@ -18,11 +22,11 @@ module Sinatra
         ["/usergroups","/usergroups/page/:page"].each do |path|
           app.post path do
             authorized! settings.failure_path
-            data=Users::UserGroup.all
+            data=Users::Group.all
             begin
-              total=Users::UserGroup.count
+              total=Users::Group.count
             rescue
-              total=Users::UserGroup.all.length
+              total=Users::Group.all.length
             end
             content_type :json
             {:data => data, :summary => {:total => total}}.to_json
@@ -35,18 +39,12 @@ module Sinatra
         app.post "/usergroup" do
           
           authorized! settings.failure_path
-          
-          puts "Creating usergroup"
            
           request.body.rewind
           usergroup_request = JSON.parse(URI.unescape(request.body.read))
           
-          # Creates the new content
-          usergroup = Users::UserGroup.create(usergroup_request) 
-          
-          puts "created usergroup : #{usergroup}"
+          usergroup = Users::Group.create(usergroup_request) 
                     
-          # Return          
           status 200
           content_type :json
           usergroup.to_json          
@@ -57,26 +55,17 @@ module Sinatra
         app.put "/usergroup" do
         
           authorized! settings.failure_path
-          
-          puts "Updating usergroup"
         
           request.body.rewind
           usergroup_request = JSON.parse(URI.unescape(request.body.read))
           
-          puts "usergroup : #{usergroup_request} #{usergroup_request.class.name}"
-          
-          # Creates the new content          
-          usergroup = Users::UserGroup.get(usergroup_request['group'])
+          usergroup = Users::Group.get(usergroup_request['group'])
           usergroup.attributes=(usergroup_request)
-          
-          puts "updating usergroup : #{usergroup}"
-          
+                    
           usergroup.save
           
-          # Return          
           content_type :json
           usergroup.to_json
-        
         
         end
         

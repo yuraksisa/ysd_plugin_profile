@@ -1,4 +1,4 @@
-require 'uri'
+require 'ysd_md_profile' unless defined?Users::Profile
 
 module Sinatra
   module YSD
@@ -19,25 +19,17 @@ module Sinatra
         #
         app.post "/profile/signup" do
     
-          # Extract the profile information from the request
-          request.body.rewind
-          profile = JSON.parse(URI.unescape(request.body.read))
-          
-          # Adds extra information to the profile    
-          profile.merge!({:preferred_language => (session[:locale] || settings.default_locale) })    
-          
-          # Signups the profile     
-          the_profile = Users::Profile.signup(profile)
+          request_profile = body_as_json(Users::RegisteredProfile).merge(
+            {:preferred_language => (session[:locale] || 
+             settings.default_locale) }) 
+          profile = Users::RegisteredProfile.signup(request_profile)
                 
-          # Authenticates the user
+          # Authenticates the new user      
           if authenticated?
             logout
-          end
-      
-          # Store the user in the session
+          end      
           session.delete(:created_user) if session.has_key?(:created_user)
           session[:created_user] = the_profile
-
           authenticate
       
           status 200
@@ -92,7 +84,7 @@ module Sinatra
           
           result = false.to_json 
           
-          if params['password'] and profile = Users::Profile.get(user[:username])
+          if params['password'] and profile = Users::RegisteredProfile.get(user[:username])
             result = profile.check_password(params['password'])?(true.to_json):(false.to_json)
           end
             
@@ -125,16 +117,15 @@ module Sinatra
     
           authorized! "/profile"
       
-          request.body.rewind
-          profile = JSON.parse(URI.unescape(request.body.read))
-      
-          # Updates the profile     
-          the_profile = Users::Profile.get(profile['username'])
-          the_profile.attributes=(profile)
-          the_profile.update    
-      
-          # Updates the user in the session
-          user.attributes=(profile)  
+          profile_request = body_as_json(Users::RegisteredProfile)
+
+          if profile = Users::Profile.get(user.username)
+            profile.attributes=(profile_request)
+            profile.save    
+          end
+          
+          # Updates the session user 
+          user.attributes=(profile_request)  
 
           status 200
           content_type :json
@@ -157,8 +148,7 @@ module Sinatra
             limit = settings.profiles_page_size
             offset = (page-1) * settings.profiles_page_size
 
-            # Query for the profiles
-            data, total = Users::Profile.find_other_profiles(user.attribute_get('username'), limit, offset)
+            data, total = Users::Profile.find_other_profiles(user.username, limit, offset)
                                                               
             content_type :json
             {:data => data, :summary => { :total => total }}.to_json

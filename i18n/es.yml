@@ -5,7 +5,7 @@ profile_dropdown:
   register:
     label: Registrarse
   login:
-    label: Conectar
+    label: Iniciar sesión
   password:
     label: Contraseña
 #

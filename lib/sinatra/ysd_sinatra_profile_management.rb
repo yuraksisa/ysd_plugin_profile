@@ -1,7 +1,9 @@
+require 'ysd_yito_core'
+
 module Sinatra
   module YSD
     #
-    # Profile (users) management
+    # Profiles management
     #
     module ProfileManagement
    
@@ -12,7 +14,7 @@ module Sinatra
         #
         app.get "/profile-management" do
           authorized! settings.failure_path
-          load_page 'profiles_management'.to_sym
+          load_page :profiles_management
         end
             
       end

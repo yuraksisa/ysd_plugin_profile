@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name    = "ysd_plugin_profile"
-  s.version = "0.1.7"
+  s.version = "0.1.20"
   s.authors = ["Yurak Sisa Dream"]
   s.date    = "2012-02-28"
   s.email   = ["yurak.sisa.dream@gmail.com"]
@@ -19,7 +19,10 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "ysd_core_themes"
   
   s.add_runtime_dependency "ysd_md_profile"
+  s.add_runtime_dependency "ysd_md_cms"  
   s.add_runtime_dependency "ysd_md_configuration"
+
+  s.add_runtime_dependency "ysd_plugin_cms"        # Menu render
 
   s.add_runtime_dependency "ysd_service_template"
   s.add_runtime_dependency "ysd_service_postal"

@@ -1,5 +1,11 @@
 # encoding: UTF-8
 require 'ysd-plugins_viewlistener' unless defined?Plugins::ViewListener
+require 'ysd_md_cms' unless defined? Site::Menu
+require 'ysd_md_configuration' unless defined? SystemConfiguration::Variable
+require 'ysd_md_profile' unless defined? Users::RegisteredProfile
+require 'ysd_core_themes' unless defined? Themes::ThemeManager
+require 'ysd_core_plugins' unless defined? Plugins::Plugin
+require 'ysd_plugin_cms' unless defined? SiteRenders::MenuRender
 
 #
 # Huasi Profile Extension
@@ -15,38 +21,41 @@ module Huasi
     #
     def install(context={})
             
-        SystemConfiguration::Variable.first_or_create({:name => 'profile_album_name'}, 
-                                                      {:value => 'profiles', :description => 'album name', :module => :profile}) 
-                                                      
-        SystemConfiguration::Variable.first_or_create({:name => 'profile_album_photo_width'}, 
-                                                      { :value => '480', :description => 'photo width', :module => :profile})
-                                                      
-        SystemConfiguration::Variable.first_or_create({:name => 'profile_album_photo_height'},
-                                                      { :value => '480', :description => 'photo height', :module => :profile})
-
-        SystemConfiguration::Variable.first_or_create({:name => 'profile.default_group'},
-                                                      {:value => 'user', :description => 'default user group(s)', :module => :profile})
+        SystemConfiguration::Variable.first_or_create(
+          {:name => 'profile.default_group'},
+          {:value => 'user', 
+           :description => 'default user group(s)', 
+           :module => :profile})
     
         # Create the login menu
         Site::Menu.first_or_create({:name => 'login'},
-                                   {:title => 'Login', :description => 'Menu de inicio', 
-                                    :menu_items => [Site::MenuItem.new(:title => 'Log in', :link_route => '/login', :description => 'Pagina de login', :weight => 0, :module => :profile)]})
+          {:title => 'Login', 
+           :description => 'Menu de inicio', 
+           :menu_items => [Site::MenuItem.new(:title => 'Log in', 
+             :link_route => '/login', 
+             :description => 'Pagina de login', 
+             :weight => 0, 
+             :module => :profile)]})
     
         # Create the default groups : staff and user
         
-        Users::UserGroup.first_or_create({:group => 'staff'},
-                                         {:name => 'Staff', :description => 'Web site staff'})
-                                         
-        Users::UserGroup.first_or_create({:group => 'user'},
-                                         {:name => 'User', :description => 'Web site user'})                                 
+        staff_group = Users::Group.first_or_create({:group => 'staff'},
+          {:name => 'Staff', :description => 'Web site staff'})
+                                        
+        user_group = Users::Group.first_or_create({:group => 'user'},
+          {:name => 'User', :description => 'Web site user'})                                 
 
-        Users::UserGroup.first_or_create({:group => 'anonymous'},
-                                         {:name => 'Anonymous users', :description => 'Anonymous user'})
+        anonymous_group = Users::Group.first_or_create({:group => 'anonymous'},
+          {:name => 'Anonymous users', :description => 'Anonymous user'})
         
         # Creates the admin profile (default profile to admin the site)
         
-        unless Users::Profile.get('admin')                
-          Users::Profile.create('admin', {:username => 'admin', :superuser => true, :password => '1234', :full_name => 'Administrator', :usergroups => ['staff'] })                 
+        unless Users::RegisteredProfile.get('admin')                
+          Users::RegisteredProfile.create_user({:username => 'admin', 
+            :superuser => true, 
+            :password => '1234', 
+            :full_name => 'Administrator', 
+            :usergroups => [staff_group]})                 
         end
                 
     end
@@ -117,23 +126,26 @@ module Huasi
                                                     :module => :profile,
                                                     :menu => menu_account})
           
-            menu_item_account_my_profile = Site::MenuItem.new({:title => app.t.profile_menu.profile, 
-                                                             :link_route => "/profile", 
-                                                             :module => :profile, 
-                                                             :menu => menu_account,
-                                                             :parent => menu_item_account})      
+            menu_item_account_my_profile = Site::MenuItem.new(
+              {:title => app.t.profile_menu.profile, 
+               :link_route => "/profile/edit", 
+               :module => :profile, 
+               :menu => menu_account,
+               :parent => menu_item_account})      
                                                                  
-            menu_item_account_configuration = Site::MenuItem.new({:title => app.t.profile_menu.change_password, 
-                                                                :link_route => "/profile/change-password", 
-                                                                :module => :profile, 
-                                                                :menu => menu_account,
-                                                                :parent => menu_item_account})
+            menu_item_account_configuration = Site::MenuItem.new(
+              {:title => app.t.profile_menu.change_password, 
+               :link_route => "/profile/change-password", 
+               :module => :profile, 
+               :menu => menu_account,
+               :parent => menu_item_account})
                                                                 
-            menu_item_account_logout = Site::MenuItem.new({:title => app.t.profile_menu.logout, 
-                                                         :link_route => "/logout", 
-                                                         :module => :profile, 
-                                                         :menu => menu_account,
-                                                         :parent => menu_item_account})
+            menu_item_account_logout = Site::MenuItem.new(
+              {:title => app.t.profile_menu.logout, 
+               :link_route => "/logout", 
+               :module => :profile, 
+               :menu => menu_account,
+               :parent => menu_item_account})
           
            
             menu_item_account.children << menu_item_account_my_profile
@@ -158,11 +170,19 @@ module Huasi
            login_locals = {}
            login_locals.store(:show_create_account, false)
            login_locals.store(:show_password_forgotten, false)
+           login_locals.store(:login_strategies, 
+             Plugins::Plugin.plugin_invoke_all('login_strategy', 
+             context).join(" ") || '')
+
            login_form = app.partial(:login, :locals => login_locals)
 
            locals = {}
-           locals.store(:show_create_account, SystemConfiguration::Variable.get_value('auth.create_account','false').to_bool)
-           locals.store(:show_password_forgotten, SystemConfiguration::Variable.get_value('auth.show_password_forgotten','false').to_bool)
+           locals.store(:show_create_account, 
+             SystemConfiguration::Variable.get_value('auth.create_account',
+             'false').to_bool)
+           locals.store(:show_password_forgotten, 
+             SystemConfiguration::Variable.get_value('auth.show_password_forgotten',
+             'false').to_bool)
            locals.store(:login_form, login_form)
 
            app.partial(:profile_dropdown, :locals => locals) 
@@ -223,21 +243,6 @@ module Huasi
        '/profile/img/woman.jpg',
        '/profile/img/woman_small.jpg']
     end
-
-    # ========= Page Building ============
-    
-    #
-    # It gets the style sheets defined in the module
-    #
-    # @param [Context]
-    #
-    # @return [Array]
-    #   An array which contains the css resources used by the module
-    #
-    #def page_style(context={})
-    #  ['/profile/css/profile_form.css',
-    #   '/profile/css/profile.css']
-    #end
  
     # ========= Routes ===================
     
@@ -270,12 +275,6 @@ module Huasi
                  :regular_expression => /^\/profile\/edit/,
                  :title => 'Edit profile',
                  :description => 'Edit our profile',
-                 :fit => 1,
-                 :module => :profile},
-                {:path => '/profile/:id',
-                 :regular_expression => /^\/profile\/.+/,
-                 :title => 'Show profile',
-                 :description => 'Visit a user profile',
                  :fit => 1,
                  :module => :profile},
                 {:path => '/profile/change-password',

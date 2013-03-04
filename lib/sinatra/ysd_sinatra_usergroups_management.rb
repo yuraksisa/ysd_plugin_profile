@@ -12,7 +12,7 @@ module Sinatra
         #
         app.get "/usergroup-management" do
           authorized! settings.failure_path
-          load_page 'usergroups_management'.to_sym
+          load_page :usergroups_management
         end
               
       end

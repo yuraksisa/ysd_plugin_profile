@@ -24,7 +24,7 @@ module WardenStrategy
     def authenticate!
       
       # Create a fake 'anonymous' user
-      _user = Users::Profile.new('anonymous', {:username => 'anonymous', :full_name => 'Anonymous', :superuser => false, :usergroups => ['anonymous']})
+      _user = Users::Profile.ANONYMOUS_USER
 
       puts "anonymous user authenticated!"
 
