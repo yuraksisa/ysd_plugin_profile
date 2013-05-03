@@ -29,7 +29,7 @@ module Sinatra
             logout
           end      
           session.delete(:created_user) if session.has_key?(:created_user)
-          session[:created_user] = the_profile
+          session[:created_user] = profile
           authenticate
       
           status 200

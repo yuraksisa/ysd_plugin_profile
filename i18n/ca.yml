@@ -24,7 +24,7 @@ change_password:
   current_password: Clau actual
   password: Nova clau
   confirm_password: Confirmar nova clau
-  send_button: Enviar
+  send_button: Canviar la clau
   error: S\'ha produit un error al canviar la clau. Si us plau, torni-ho a intentar.
   validation:
     current_password_required: La clau és obligatòria

@@ -132,11 +132,31 @@
     
     this.configForm = function(entity) {
       
-      var dataSource = new RemoteDataSource('/usergroups',{id:'group', description:'name'});
-      var value = (entity&&entity.usergroups)?entity.usergroups:[]; 
-      var selector = new ListSelector('user_groups', 'usergroups[group]', dataSource, value );
+      // Configure the usergroups
+      var ugDataSource = new RemoteDataSource('/usergroups',{id:'group', description:'name'});
+      var ugValue = (entity&&entity.usergroups)?entity.usergroups.map(function(item){return item.group;}):[]; 
+      var ugSelector = new ListSelector('user_groups', 'usergroups[]', ugDataSource, ugValue );
     	
     }
+
+    this.adaptFormData = function(data) {
+      
+      data.usergroups = this.adaptUsergroups(data.usergroups); 
+      return data;  
+      
+    }
+
+    this.adaptUsergroups = function(usergroups) { /* It converts from an array of string (each is an usergroup group) to an array of ProfileGroup */
+      
+      var adaptedUsergroups = [];
+
+      for (idx in usergroups) {
+        adaptedUsergroups.push({'group': usergroups[idx]});
+      }
+
+      return adaptedUsergroups;
+
+    }    
   	
   };
   

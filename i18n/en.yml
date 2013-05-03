@@ -24,7 +24,7 @@ change_password:
   current_password: Current password
   password: New password
   confirm_password: Confirm new password
-  send_button: Send
+  send_button: Change password
   error: An error occurred while changing the password. Please try it again
   validation:
     current_password_required: The password is required

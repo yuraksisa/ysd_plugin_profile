@@ -26,7 +26,7 @@ change_password:
   current_password: Contraseña actual
   password: Contraseña nueva
   confirm_password: Confirmar contraseña nueva
-  send_button: Enviar
+  send_button: Cambiar contraseña
   error: Se ha producido un error al cambiar la contraseña. Por favor, vuélvalo a intentar
   validation:
     current_password_required: La contraseña es obligatoria
@@ -95,7 +95,7 @@ profile:
   years: años
   about_me: Sobre mi
   edit_profile: Editar perfil
-  member_since: Por aquí desde
+  member_since: Miembro desde
   last_access: Último acceso 
   about_me: Bio
   gender: Sexo
