@@ -28,9 +28,13 @@
     
     </form>
 
-    <div id="registering-profile" title="<%= t.profile_form.sending_request %>" style="display:none">
-      <img src="/img/ajax-loader_grande.gif" style="display:block; margin:0 auto"/>
+    <div id="registering-profile" style="display:none" class="top-margin bottom-margin">
+      <img src="/img/ajax-loader.gif" style="display:block; margin:0 auto"/>
     </div>  
+
+    <div id="registering-profile-error" style="display:none" class="top-margin bottom-margin">
+      <p><%= t.profile_form.process_error_description %></p>
+    </div>
 
     <script type="text/javascript">
 
@@ -132,13 +136,6 @@
               function(){
                 $('input[name=full_name]').focus();
               });
-
-            // Configure the dialog
-            $('#registering-profile').dialog({autoOpen: false, height: 160, modal: true,
-              closeOnEscape: false,
-               open: function(event, ui) { $(".ui-dialog-titlebar-close").hide(); },
-               close: function(event, ui) { $(".ui-dialog-titlebar-close").show(); }
-             });
 
           }
 
@@ -253,30 +250,18 @@
             switch (new_state) {
         
                case 'sending_request':
-                 $('#registering-profile').dialog('open');
+                 $('#registering-profile-error').hide();
+                 $('#registering-profile').show();
                  break;
           
                case 'process_completed':
-                 $('#registering-profile').dialog('close');
-                 $('<div title="<%=t.profile_form.process_ok_title%>"> <%= t.profile_form.process_ok_description %> </div>').dialog( { height: 200, modal: true,       
-                   buttons: {
-                     Ok: function() {
-                       $(this).dialog( "close" );
-                       the_controller.on_register_profile();
-                     }
-                   }
-                  });      
+                 $('#registering-profile').hide();
+                 the_controller.on_register_profile();      
                  break;
          
                case 'process_error':
-                 $('#registering-profile').dialog('close');
-                 $('<div title="<%= t.profile_form.process_error_title%>"> <%= t.profile_form.process_error_description %> </div>').dialog( { height: 200, modal: true,       
-                   buttons: {
-                     Ok: function() {
-                       $(this).dialog( "close" );
-                     }
-                   }
-                 });                                
+                 $('#registering-profile').hide();
+                 $('#registering-profile-error').show();
                  break;   
           
             }
