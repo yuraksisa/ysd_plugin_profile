@@ -110,3 +110,56 @@ profile_admin_menu:
   profile_menu: Gestión de usuarios
   profile_management: Usuarios
   usergroup_management: Grupos
+#
+# Profile management
+#  
+profile_management:
+  title: Usuarios
+  description: >
+               <p>Usuarios permite conocer los usuarios que están registrados en el sistema, dar de alta nuevos usuarios y asignar los usuarios a grupos.</p>
+  table:
+    username: Usuario
+    full_name: Nombre completo
+    email: Correo electrónico
+    member_since: Miembro desde
+    last_access: Último acceso
+  form:
+    username:
+      label: Usuario
+      description:
+    full_name:
+      label: Nombre completo
+      description:
+    email:
+      label: Correo electrónico
+      description: 
+    password:
+      label: Contraseña
+      description:
+    confirm_password:
+      label: Confirmar contraseña
+      description:
+    usergroups:
+      label: Grupos
+      description:
+    superuser:
+      label: Superusuario
+      description: 
+#
+# User groups management
+#      
+usergroups_management:  
+  title: Grupos de usuarios
+  description: >
+               <p>Los <em>grupos de usuarios</em> le permite organizar los usuarios de su sitio en diferentes categorías, de manera que pueda definir accesos a contenidos o aplicaciones a determinados usuarios, así como conocer qué usuarios pertenecen a un determinado grupo.</p>
+  table:
+    group: Grupo
+    name: Nombre
+    description: Descripción
+  form:
+    group:
+      label: Grupo
+    name:
+      label: Nombre
+    description:
+      label: Descripción

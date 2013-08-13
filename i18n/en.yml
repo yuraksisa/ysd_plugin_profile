@@ -75,8 +75,8 @@ profile_form:
     mail_required: The mail is required
     mail_valid: Please type a valid email address, like account@domain.com
     mail_in_use: The email adress {0} has an account. Have you forgotten your password?
-    mail_not_in_use: The email adress {0} doesn\'t exist.
-    mail_not_in_use_server : The email adress %1 doesn\'t exist.  
+    mail_not_in_use: The email adress {0} does not exist.
+    mail_not_in_use_server: The email adress %1 does not exist.  
     username_required: The username is required
     username_regexp: The username can only contain letters and digits
     username_in_use: The username {0} is already taken. Please choose another.
@@ -108,3 +108,56 @@ profile_admin_menu:
   profile_menu: Users management
   profile_management: Users
   usergroup_management: Groups
+#
+# Profile management
+#  
+profile_management:
+  title: Users
+  description: >
+               <p>It manages the registered users</p>
+  table:
+    username: Username
+    full_name: Full name
+    email: Email
+    member_since: Member since
+    last_access: Last access
+  form:
+    username:
+      label: Username
+      description:
+    full_name:
+      label: Full name
+      description:
+    email:
+      label: Email
+      description: 
+    password:
+      label: Password
+      description:
+    confirm_password:
+      label: Confirm password
+      description:
+    usergroups:
+      label: Groups
+      description:
+    superuser:
+      label: Superuser
+      description:
+#
+# User groups management
+#      
+usergroups_management:  
+  title: User groups
+  description: >
+               <p>User groups management</p>
+  table:
+    group: Group
+    name: Name
+    description: Description
+  form:
+    group:
+      label: Group
+    name:
+      label: Name
+    description:
+      label: Description  

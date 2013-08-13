@@ -108,3 +108,56 @@ profile_admin_menu:
   profile_menu: Gestió d\'usuaris
   profile_management: Usuaris
   usergroup_management: Grups
+#
+# Profile management
+#  
+profile_management:
+  title: Usuaris
+  description: >
+               <p>Usuaris permit conèixer els usuaris enregistrats en el sistema, donar d'alta nous usuaris i assignar usuaris a grups</p>
+  table:
+    username: Usuari
+    full_name: Nom complet
+    email: Correu electrònic
+    member_since: Donat d'alta
+    last_access: Últim accès
+  form:
+    username:
+      label: Usuari
+      description:
+    full_name:
+      label: Nom complet
+      description:
+    email:
+      label: Correu electrònic
+      description: 
+    password:
+      label: Clau
+      description:
+    confirm_password:
+      label: Confirmar clau
+      description:
+    usergroups:
+      label: Grups
+      description:
+    superuser:
+      label: Superusuari
+      description:
+#
+# User groups management
+#      
+usergroups_management:  
+  title: Grups d\'usuaris
+  description: >
+               <p>Els <em>grups d\'usuaris</em> permeten organitzar els usuaris, per definir permissos d\'accès als contiguts i les aplicacions.</p>
+  table:
+    group: Grup
+    name: Nom
+    description: Descripció
+  form:
+    group:
+      label: Grup
+    name:
+      label: Nom
+    description:
+      label: Descripció

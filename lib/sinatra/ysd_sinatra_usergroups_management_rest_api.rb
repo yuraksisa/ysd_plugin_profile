@@ -10,17 +10,22 @@ module Sinatra
     module UserGroupManagementRESTApi
    
       def self.registered(app)
-                    
-        app.get "/usergroups" do
+        
+        #
+        # Retrieve user groups [GET]
+        #            
+        app.get "/api/usergroups" do
             authorized! settings.failure_path
             data=Users::Group.all
             content_type :json
             data.to_json        
         end
         
-        # Retrive the contents
-        ["/usergroups","/usergroups/page/:page"].each do |path|
-          app.post path do
+        #
+        # Retrive user groups [POST]
+        #
+        ["/api/usergroups","/api/usergroups/page/:page"].each do |path|
+          app.post path, :allowed_usergroups => ['staff'] do
             authorized! settings.failure_path
             data=Users::Group.all
             begin
@@ -35,8 +40,10 @@ module Sinatra
         
         end
         
-        # Create a new content
-        app.post "/usergroup" do
+        #
+        # Create a new user group
+        #
+        app.post "/api/usergroup", :allowed_usergroups => ['staff'] do
           
           authorized! settings.failure_path
            
@@ -51,8 +58,10 @@ module Sinatra
         
         end
         
-        # Updates a content
-        app.put "/usergroup" do
+        #
+        # Updates an user group
+        #
+        app.put "/api/usergroup", :allowed_usergroups => ['staff'] do
         
           authorized! settings.failure_path
         
@@ -69,8 +78,10 @@ module Sinatra
         
         end
         
-        # Deletes a content
-        app.delete "/usergroup" do
+        #
+        # Deletes a user group
+        #
+        app.delete "/api/usergroup", :allowed_usergroups => ['staff'] do
         
         end
       

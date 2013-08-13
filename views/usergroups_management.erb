@@ -2,11 +2,11 @@
 
 <!-- Renders the element description -->
 <script type="text/tmpl" id="elements_title">
-    <h2 class="entity-title">User groups</h2>
+    <h2 class="entity-title"><%=t.usergroups_management.title%></h2>
 </script>
 
 <script type="text/tmpl" id="elements_description">
-    <p>Los <em>grupos de usuarios</em> le permite organizar los usuarios de su sitio en diferentes categorías, de manera que pueda definir accesos a contenidos o aplicaciones a determinados usuarios, así como conocer qué usuarios pertenecen a un determinado grupo.</p>
+    <%=t.usergroups_management.description%>
 </script>
 
 <!-- Renders the elements container -->
@@ -15,9 +15,15 @@
   <table id="elements_table" class="table">
      <thead class="table-header">
        <tr>
-         <th class="table-header-title" scope="col" style="width:15%">Group</th>
-         <th class="table-header-title" scope="col" style="width:35%">Name</th>
-         <th class="table-header-title" scope="col" style="width:50%">Description</th>
+         <th class="table-header-title" scope="col" style="width:15%">
+             <%=t.usergroups_management.table.group%>
+         </th>
+         <th class="table-header-title" scope="col" style="width:35%">
+             <%=t.usergroups_management.table.name%>
+         </th>
+         <th class="table-header-title" scope="col" style="width:50%">
+             <%=t.usergroups_management.table.description%>
+         </th>
        </tr>
      </thead>
      <tbody id="elements_tbody" class="table-tbody">             
@@ -30,7 +36,8 @@
         
 <script type="text/tmpl" id="elements_list_template">
 
-    <tr class="table-row element-navigation-detail" rel="<%%= index %>" id="element_row_<%%=index%>">
+    <tr class="table-row element-navigation-detail" rel="<%%= index %>" 
+        id="element_row_<%%=index%>">
       <td class="table-cell"><%%= entity.group %></td>
       <td class="table-cell"><%%= entity.name %></td>
       <td class="table-cell"><%%= entity.description %></td>
@@ -43,9 +50,19 @@
 <script type="text/tmpl" id="element_template">
 
      <div class="element_template" style="overflow:hidden">
-       <div class="entity-field"><span class="entity-fieldlabel">Group</span> <span class="entity-fieldvalue"><span class="entity-id"><%%= entity.group %></span></span> </div>
-       <div class="entity-field"><span class="entity-fieldlabel">Name</span> <span class="entity-fieldvalue"><%%= entity.name %></span> </div>
-       <div class="entity-field"><span class="entity-fieldlabel">Description</span> <span class="entity-fieldvalue"><%%= entity.description %></span> </div>
+       <div class="entity-field">
+          <span class="entity-fieldlabel"><%=t.usergroups_management.form.group.label%></span>
+          <span class="entity-fieldvalue">
+             <span class="entity-id"><%%= entity.group %></span>
+          </span> 
+       </div>
+       <div class="entity-field">
+          <span class="entity-fieldlabel"><%=t.usergroups_management.form.name.label%></span> 
+          <span class="entity-fieldvalue"><%%= entity.name %></span>
+       <div class="entity-field">
+          <span class="entity-fieldlabel"><%=t.usergroups_management.form.description.label%></span> 
+          <span class="entity-fieldvalue"><%%= entity.description %></span>
+       </div>
      </div>
 
 </script>
@@ -55,28 +72,26 @@
 <script type="text/tmpl" id="element_template_form">
               
      <form name="element">
-        
-        <div class="top-navigation-bar navigation-bar">
-             <h2 class="form-title">User group</h2>
-             <div class="navigation-bar-nav-buttons">
-             </div>
-        </div>        
-
+   
         <div class="form-fields">
         
           <div class="formrow">
-            <label for="username" class="fieldtitle">Group <span class="mandatoryfield">*</span></label>
+            <label for="username" class="fieldtitle">
+               <%=t.usergroups_management.form.group.label%><span class="mandatoryfield">*</span>
+            </label>
             <input type="text" maxlength="32" id="group" name="group" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.group %>" <%% } %> />
           </div>
         
           <div class="formrow">
-            <label for="fullname" class="fieldtitle">Name</label>
+            <label for="fullname" class="fieldtitle"><%=t.usergroups_management.form.name.label%></label>
             <input type="text" maxlength="80" id="name" name="name" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.name %>" <%% } %>/>
           </div>
           
           <div class="formrow">
-            <label for="description" class="fieldtitle">Description</label>
-            <textarea name="description" id="description" class="fieldcontrol"><%% if (entity) { %> <%%= entity.description %> <%% } %></textarea>
+            <label for="description" class="fieldtitle">
+              <%=t.usergroups_management.form.description.label%>
+            </label>
+            <textarea name="description" id="description" class="fieldcontrol"><%% if (entity) { %><%%=entity.description %><%% } %></textarea>
           </div>
           <p style="text-align:right"> <span id="description_length"></span> <%= t.available_chars %> </p>
                 
@@ -85,10 +100,10 @@
         <div class="bottom-navigation-bar navigation-bar">
              <div class="navigation-bar-crud-buttons">
                 <%% if (entity) { %>
-                  <input type="submit" class="update-entity-button action-button entity-management-button" value="Update"/>
+                  <input type="submit" class="update-entity-button action-button entity-management-button" value="<%=t.entitymanagement.update%>"/>
                 <%% } 
                    else { %>
-                  <input type="submit" class="create-entity-button action-button entity-management-button" value="Create"/>
+                  <input type="submit" class="create-entity-button action-button entity-management-button" value="<%=t.entitymanagement.create%>"/>
                 <%% } %>
              </div>
         </div>
@@ -133,15 +148,16 @@ require(['YSDEntityManagement', 'YSDForms', 'jquery'], function(EntityManagement
   };
   
   var urls = { 
-  	           query_url  : '/usergroups',
-    	         create_url : '/usergroup',
-  	           update_url : '/usergroup',
-  	           delete_url : '/usergroup',
-  	           get_url    : '/usergroup'
+  	           query_url  : '/api/usergroups',
+    	         create_url : '/api/usergroup',
+  	           update_url : '/api/usergroup',
+  	           delete_url : '/api/usergroup',
+  	           get_url    : '/api/usergroup'
   	         };
   
   var userGroupHook = new UserGroupHook();
-  var userGroupManager = new EntityManagement(urls, 'user group', 12, userGroupHook);
+  var userGroupManager = new EntityManagement(urls, 'user group', 12,
+    userGroupHook, {prefix: '/admin'});
  
 
 });

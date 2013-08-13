@@ -12,7 +12,7 @@ module Sinatra
         #
         # Retrieve users
         #
-        app.get "/users" do        
+        app.get "/api/users", :allowed_usergroups => ['staff'] do        
           content_type :json
           Users::Profile.all.to_json     
         end
@@ -20,8 +20,8 @@ module Sinatra
         #
         # Profiles search
         #
-        ["/users","/users/page/:page"].each do |path|
-          app.post path do
+        ["/api/users","/api/users/page/:page"].each do |path|
+          app.post path, :allowed_usergroups => ['staff'] do
             data, total = Users::Profile.all_and_count
           
             content_type :json
@@ -30,22 +30,22 @@ module Sinatra
         end
         
         #
-        # Creates a new profile
+        # Creates a new user profile
         #  
-        app.post "/user" do
+        app.post "/api/user", :allowed_usergroups => ['staff'] do
           
           profile = Users::RegisteredProfile.create(body_as_json(Users::RegisteredProfile))           
                     
           status 200
           content_type :json
-          content.to_json          
+          profile.to_json          
         
         end
         
         #
-        # Updates a profile
+        # Updates an user profile
         #
-        app.put "/user" do
+        app.put "/api/user", :allowed_usergroups => ['staff'] do
           
           profile_request = body_as_json(Users::RegisteredProfile)
 
@@ -60,9 +60,9 @@ module Sinatra
         end
 
         #
-        # Deletes a profile
+        # Deletes an user profile
         #        
-        app.delete "/user" do
+        app.delete "/api/user", :allowed_usergroups => ['staff'] do
         
           profile_request = body_as_json(Users::RegisteredProfile)
 
