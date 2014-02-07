@@ -184,6 +184,13 @@
 
     this.configValidation = function() {
 
+         $.validator.addMethod(
+              "regexp",
+              function(value, element, regexp) {
+                var re = new RegExp(regexp);
+                return this.optional(element) || re.test(value);  
+              }, "Please check your input");
+
          $('#profiles_management_form').validate({
             
             submitHandler: function(form) 
