@@ -11,7 +11,7 @@ profile_dropdown:
 #
 # Profile management
 #
-profile_management:
+user_profile_management:
   title: Profile
   description: >
                <p>This data is shown on your public profile and searches.</p>

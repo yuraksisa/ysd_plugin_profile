@@ -120,7 +120,8 @@ module Huasi
             # Defines the profile menu
             menu_account = Site::Menu.new({:name => 'profile_menu', 
                                            :title => 'Profile menu', 
-                                           :description => 'Account menu'})
+                                           :description => 'Account menu',
+                                           :language_in_routes => false})
           
             menu_item_account = Site::MenuItem.new({:title => app.user.full_name, 
                                                     :module => :profile,

@@ -11,7 +11,7 @@ profile_dropdown:
 #
 # Profile management
 #
-profile_management:
+user_profile_management:
   title: Perfil
   description: >
                <p>Aquesta informació es mostra al teu perfil públic i cerques.</p>

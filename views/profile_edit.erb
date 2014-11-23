@@ -1,12 +1,12 @@
 <%= include('entity-management') %>
 
 <script type="text/tmpl" id="elements_title">
-  <h2 class="entity-title"><%=t.profile_management.title%></h2>
+  <h2 class="entity-title"><%=t.user_profile_management.title%></h2>
 </script>
 
 <script type="text/tmpl" id="elements_description">
 
-  <%=t.profile_management.description%>
+  <%=t.user_profile_management.description%>
 
 </script>
 
@@ -45,7 +45,7 @@
 
           <div id="tabs_above">
            <ul>
-             <%= render_tab('tab_personal_information', t.profile_management.tab_personal_information.label) %>
+             <%= render_tab('tab_personal_information', t.user_profile_management.tab_personal_information.label) %>
              <% if edit_element_form_above_ingroup_tab.strip.length > 0 %>
              <%= edit_element_form_above_ingroup_tab %>
              <% end %>
