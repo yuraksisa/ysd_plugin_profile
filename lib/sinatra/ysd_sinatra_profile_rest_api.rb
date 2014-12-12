@@ -17,7 +17,7 @@ module Sinatra
         #
         # Register a new profile (REST API)
         #
-        app.post "/profile/signup" do
+        app.post "/api/profile/signup" do
     
           request_profile = body_as_json(Users::RegisteredProfile).merge(
             {:preferred_language => (session[:locale] || 
@@ -42,7 +42,7 @@ module Sinatra
         #
         # Returns false it exists (is not valid)
         #
-        app.post "/profile/check-user-not-exist" do
+        app.post "/api/profile/check-user-not-exist" do
     
           content_type :json
           Users::Profile.get(params['username'])?(false.to_json):(true.to_json)
@@ -54,7 +54,7 @@ module Sinatra
         #
         # Returns true if it exists and false if it does not exist
         #
-        app.post "/profile/check-email-not-exist" do
+        app.post "/api/profile/check-email-not-exist" do
         
           content_type :json
           Users::Profile.email_registered?(params['email'])?(false.to_json):(true.to_json)
@@ -64,7 +64,7 @@ module Sinatra
         #
         # Check if it exists a profile with this email (REST API)
         #
-        app.post "/profile/check-email-exists" do
+        app.post "/api/profile/check-email-exists" do
           
           content_type :json
           Users::Profile.email_registered?(params['email'])?(true.to_json):(false.to_json)
@@ -78,7 +78,7 @@ module Sinatra
         #
         # Check if the connected profile password matches the received
         #
-        app.post "/profile/check-password" do
+        app.post "/api/profile/check-password" do
          
           authorized! "/profile"
           
@@ -96,7 +96,7 @@ module Sinatra
         #
         # Get our profile
         #
-        app.get "/userprofile" do
+        app.get "/api/userprofile" do
 
           authorized! "/profile"
 
@@ -113,7 +113,7 @@ module Sinatra
         #
         # Updates our profile (REST API)
         #
-        app.put "/userprofile" do
+        app.put "/api/userprofile" do
     
           authorized! "/profile"
       
@@ -138,8 +138,8 @@ module Sinatra
         # Search profile (REST API) 
         #
         #
-        ["/profiles",
-         "/profiles/page/:page"].each do |path|
+        ["/api/profiles",
+         "/api/profiles/page/:page"].each do |path|
           app.post path do
                                                               
             authorized! "/profile"

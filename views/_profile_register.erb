@@ -88,7 +88,7 @@
 
             $.ajax ({
                type: 'POST',
-               url: '/profile/signup',
+               url: '/api/profile/signup',
                data: json_request,
                data_type: 'html', /* Response expected from the server */
                content_type: 'application/json; charset=utf-8',
@@ -167,7 +167,7 @@
                     required : true,
                     email: true,
                     remote: {
-                      url: '/profile/check-email-not-exist',
+                      url: '/api/profile/check-email-not-exist',
                       type: 'post',
                       content_type: 'application/json; charset=utf-8',
                       data : {
@@ -182,7 +182,7 @@
                     required: true,  
                     regexp: '^[\\w|\\d]*$',
                     remote: {
-                      url: '/profile/check-user-not-exist',
+                      url: '/api/profile/check-user-not-exist',
                       type: 'post',
                       content_type: 'application/json; charset=utf-8',
                       data: {
