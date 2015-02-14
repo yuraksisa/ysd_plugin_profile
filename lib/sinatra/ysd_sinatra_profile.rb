@@ -27,6 +27,10 @@ module Sinatra
           
         # --------------------- Forget password ------------------------------
         
+        app.get "/profile/register" do
+          load_page :profile_register
+        end
+
         #
         # Password forgotten form 
         #

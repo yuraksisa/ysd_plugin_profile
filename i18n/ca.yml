@@ -12,7 +12,7 @@ profile_dropdown:
 # Profile management
 #
 user_profile_management:
-  title: Perfil
+  title: El meu perfil
   description: >
                <p>Aquesta informació es mostra al teu perfil públic i cerques.</p>
   tab_personal_information:

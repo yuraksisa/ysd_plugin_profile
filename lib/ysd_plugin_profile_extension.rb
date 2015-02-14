@@ -294,6 +294,17 @@ module Huasi
     
     end     
   
+    #
+    # ---------- Path prefixes to be ignored ----------
+    #
+
+    #
+    # Ignore the following path prefixes in language processor
+    #
+    def ignore_path_prefix_language(context={})
+      %w(/profile/change-password)
+    end
+
   
   end #MailExtension
 end #Social

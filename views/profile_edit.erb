@@ -30,7 +30,8 @@
 <!-- Renders the form to edit an element -->
 
 <script type="text/tmpl" id="element_template_form">
-              
+     
+     <h2 class="entity-title top-margin"><%=t.user_profile_management.title%></h2>         
      <form name="element">
    
         <div class="form-fields">
@@ -86,7 +87,7 @@
         </div>
         
         <div class="bottom-navigation-bar navigation-bar">
-             <div class="navigation-bar-nav-buttons">
+             <div class="navigation-bar-crud-buttons">
                  <input type="submit" class="update-entity-button action-button entity-management-button" value="<%=t.entitymanagement.update%>"/>
              </div>
         </div>

@@ -12,7 +12,7 @@ profile_dropdown:
 # Profile management
 #
 user_profile_management:
-  title: Perfil
+  title: Mi perfil
   description: >
                <p>Esta información aparece en tu perfil público y búsquedas</p>
   tab_personal_information:
@@ -66,12 +66,12 @@ profile_form:
   process_update_ok_description: Se ha actualizado la información de su cuenta.
   process_update_error_title: Error actualizando su cuenta
   process_update_error_description: No se ha podido actualizar su cuenta. Se ha producido un error en el servidor.
-  username_placeholder: Escriba su nombre de usuario
-  email_placeholder: Escriba su dirección de correo electrónico
-  password_placeholder: Escriba su contraseña
+  username_placeholder: Nombre de usuario
+  email_placeholder: Dirección de correo electrónico
+  password_placeholder: Contraseña
   confirm_password_placeholder: Confirme su contraseña
-  full_name_placeholder: Escriba su nombre completo (Nombre y apellidos)
-  country_of_origin_placeholder: Escriba su país de origen. (Barcelona, Spain)
+  full_name_placeholder: Nombre completo
+  country_of_origin_placeholder: Su ciudad. 
   about_me_placeholder: ¿Qué haces ahora? ¿Tienes alguna cita favorita?
   validation:
     mail_required: El correo electrónico es obligatorio
