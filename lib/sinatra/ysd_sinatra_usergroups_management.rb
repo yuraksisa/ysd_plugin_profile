@@ -12,7 +12,7 @@ module Sinatra
         #
         app.get "/admin/usergroups?", :allowed_usergroups => ['staff']  do
           authorized! settings.failure_path
-          load_page :usergroups_management
+          load_em_page :usergroups_management, nil, false
         end
               
       end

@@ -14,7 +14,7 @@ module Sinatra
         #
         app.get "/admin/profiles?", :allowed_usergroups => ['staff'] do
           authorized! settings.failure_path
-          load_page :profiles_management
+          load_em_page :profiles_management, nil, false
         end
             
       end
