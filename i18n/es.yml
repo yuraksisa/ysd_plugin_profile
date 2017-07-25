@@ -144,7 +144,19 @@ profile_management:
       description:
     superuser:
       label: Superusuario
-      description: 
+      description:
+    api_key:
+      label: Api key
+    api_key_generate_button:
+      label: Generar  
+    api_key_generate_confirm: 
+      label: ¿Desea generar Api Key para el usuario?  
+    secret_key:
+      label: Secret key
+    secret_key_generate_button:
+      label: Generar
+    secret_key_generate_confirm: 
+      label: ¿Desea generar Secret Key para el usuario?               
 #
 # User groups management
 #      

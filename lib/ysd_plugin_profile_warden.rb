@@ -13,26 +13,26 @@ module ProfileWarden
     def valid?
       params['username'] || params['password'] || session[:created_user]
     end
-  
+
     # Authenticate the user
     #
     def authenticate!
-                     
-      if session[:created_user]          
+
+      if session[:created_user]
         profile = session.delete(:created_user)
-        success!(profile)        
-      else                
+        success!(profile)
+      else
         if profile = Users::RegisteredProfile.login(request.params['username'], request.params['password'])
           profile.update_last_access
           success!(profile)
         else
           fail!("User or password is incorrect")
         end
-    
+
       end
-    
+
     end
-
+  
   end
-
+  
 end

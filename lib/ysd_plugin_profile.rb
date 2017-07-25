@@ -15,6 +15,7 @@ require 'commands/ysd_profile_message_received_command'
 
 require 'ysd_plugin_profile_warden'
 require 'ysd_plugin_profile_warden_anonymous'
+require 'ysd_plugin_profile_warden_api_key'
 
 require 'ysd_plugin_profile_extension'
 require 'ysd_plugin_profile_init'

@@ -110,6 +110,33 @@
               <div class="fielddescription"><%=t.profile_management.form.superuser.description%></div>
             </div>
           </div>
+
+          <%% if (entity) { %>
+          <div class="formrow">
+            <label for="api_key" class="fieldtitle"><%=t.profile_management.form.api_key.label%></label>
+            <input type="text" maxlength="48" id="api_key" name="api_key" class="fieldcontrol" readonly style="background: #EEE" value="<%%= entity.api_key %>"/>   
+          </div>
+          <div>
+            <button class="form-button blue-button element-action-button" id="generate_api_key_button" 
+                      data-action-method="POST"
+                      data-action-url="/api/user/<%%=entity.username%>/generate-api-key"
+                      data-confirm-message="<%=t.profile_management.form.api_key_generate_confirm.label%>">
+                      <%=t.profile_management.form.api_key_generate_button.label%>
+                  </button>
+          </div>            
+          <div class="formrow">
+            <label for="api_secret" class="fieldtitle"><%=t.profile_management.form.secret_key.label%></label>
+            <input type="text" maxlength="48" id="api_secret" name="api_secret" class="fieldcontrol" style="background: #EEE" readonly value="<%%= entity.api_secret %>"/>
+          </div>
+          <div>
+            <button class="form-button blue-button element-action-button" id="generate_secret_key_button" 
+                      data-action-method="POST"
+                      data-action-url="/api/user/<%%=entity.username%>/generate-secret-key"
+                      data-confirm-message="<%=t.profile_management.form.secret_key_generate_confirm.label%>">
+                      <%=t.profile_management.form.secret_key_generate_button.label%>
+                  </button>
+          </div>  
+          <%% } %>
         
         </div>
         

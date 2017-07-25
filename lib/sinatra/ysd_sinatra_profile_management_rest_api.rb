@@ -74,7 +74,39 @@ module Sinatra
           true.to_json
 
         end
-      
+
+        #
+        # Generates the api key for an user
+        #
+        app.post '/api/user/:username/generate-api-key', :allowed_usergroups => ['staff'] do
+
+          if user = Users::Profile.get(params[:username])
+            user.api_key = Users::Profile.generate_key
+            user.save
+            content_type :json
+            user.to_json
+          else
+            status 404
+          end 
+
+        end
+
+        #
+        # Generates the api secret for an user
+        #
+        app.post '/api/user/:username/generate-secret-key', :allowed_usergroups => ['staff'] do
+
+          if user = Users::Profile.get(params[:username])
+            user.api_secret = Users::Profile.generate_key
+            user.save
+            content_type :json
+            user.to_json
+          else
+            status 404
+          end 
+
+        end
+       
       end
     
     end
