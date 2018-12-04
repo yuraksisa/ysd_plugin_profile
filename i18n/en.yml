@@ -28,12 +28,14 @@ change_password:
   error: An error occurred while changing the password. Please try it again
   validation:
     current_password_required: The password is required
+  password_updated: You have successfully updated your password     
 password_forgotten:
   title: Have you forgetten your password?
   description: To recover your password, input the username you use to start a session or the email which you use to create your account.
   email: Email address
   send_button: Send
   error: An error ocurred while processing your request. Please try it again
+  send_password: A new password has been sent to your email account. Use it to access to your account    
 available_chars: available characters
 profile_form:
   create_account_title: Create a new account

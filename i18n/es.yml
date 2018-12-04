@@ -30,12 +30,14 @@ change_password:
   error: Se ha producido un error al cambiar la contraseña. Por favor, vuélvalo a intentar
   validation:
     current_password_required: La contraseña es obligatoria
+  password_updated: Ha modificado su contraseña  
 password_forgotten:
   title: ¿Has olvidado tu contraseña?
   description: Para restablecer tu contraseña, introduce el nombre de usuario que utilizas para iniciar sesión o la dirección de correo electrónico con la que creaste la cuenta.
   email: Dirección de correo electrónico
   send_button: Enviar
   error: Se ha producido un error al atender su petición. Por favor, vuélvalo a intentar
+  send_password: Se ha enviado una nueva contraseña a su cuenta de correo electrónico. Úsela para acceder a su cuenta.   
 available_chars: caracteres disponibles
 profile_form:
   create_account_title: Crear nueva cuenta

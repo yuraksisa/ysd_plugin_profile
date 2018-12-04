@@ -86,13 +86,14 @@ module Sinatra
            begin
              profile = Users::RegisteredProfile.get(user.username)
              profile.change_password!(params['current_password'], params['password'])
+             p "password updated"
              load_page :password_updated
            rescue PasswordNotValid
-             flash[:error] = t.profile_form.validation.password_not_valid
+             flash.now[:error] = t.profile_form.validation.password_not_valid
              load_page :change_password
            rescue
              logger.error("Error changing password #{user.username}")
-             flash[:error] = t.change_password.error
+             flash.now[:error] = t.change_password.error
              load_page :change_password
            end
            
